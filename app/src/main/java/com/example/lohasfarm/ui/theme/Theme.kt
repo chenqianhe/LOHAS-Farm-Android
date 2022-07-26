@@ -1,44 +1,102 @@
 package com.example.lohasfarm.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+
+enum class StylePallet {
+    DARK,
+    LIGHT
+}
+
+
+private val LfDarkColorPalette = LfColors(
+    navBar = navBar,
+    tabSelected = tabSelected,
+    tabDefault = tabDefault,
+    headline = headline,
+    emphasize = emphasize,
+    body1 = body1,
+    body2 = body2,
+    footnote = footnote,
+    background = background,
+    white = white,
+    black = black,
+    default = default,
+    color = color,
+    color1 = color1,
+    color2 = color2,
+    color3 = color3,
+    color4 = color4,
+    isLight = false
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+private val LfLightColorPalette = LfColors(
+    navBar = navBar,
+    tabSelected = tabSelected,
+    tabDefault = tabDefault,
+    headline = headline,
+    emphasize = emphasize,
+    body1 = body1,
+    body2 = body2,
+    footnote = footnote,
+    background = background,
+    white = white,
+    black = black,
+    default = default,
+    color = color,
+    color1 = color1,
+    color2 = color2,
+    color3 = color3,
+    color4 = color4,
+    isLight = true
 )
+
 
 @Composable
 fun LOHASFarmTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        LfDarkColorPalette
     } else {
-        LightColorPalette
+        LfLightColorPalette
+    }
+    val sysUiController = rememberSystemUiController()
+    SideEffect {
+        sysUiController.setSystemBarsColor(
+            color = colors.background.copy()
+        )
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    ProvideLfColors(colors) {
+        MaterialTheme(
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
+}
+
+
+object LOHASFarmTheme {
+    val colors: LfColors
+        @Composable
+        get() = LocalLfColors.current
+}
+
+
+@Composable
+fun ProvideLfColors(colors: LfColors, content: @Composable () -> Unit) {
+    val colorPalette = remember {
+        colors.copy()
+    }
+    colorPalette.update(colors)
+    CompositionLocalProvider(LocalLfColors provides colorPalette, content = content)
+}
+
+
+private val LocalLfColors = staticCompositionLocalOf {
+    LfLightColorPalette
 }

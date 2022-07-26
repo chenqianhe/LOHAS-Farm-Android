@@ -2,7 +2,22 @@ package com.example.lohasfarm.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+
+val navBar = Color(0xFF141719)
+val tabSelected = Color(0xFF2F3133)
+val tabDefault = Color(0xFFAFB1B3)
+val headline = Color(0xFF141719)
+val emphasize = Color(0xFF141719)
+val body1 = Color(0xFF2F3133)
+val body2 = Color(0xFF555759)
+val footnote = Color(0xFFAFB1B2)
+val background = Color(0xFFF5F7F7)
+
+val white = Color(0xFFFFFFFF)
+val black = Color(0xFF000000)
+val default = Color(0xFF000000)
+val color = Color(0xFF006B36)
+val color1 = Color(0xFF008C46)
+val color2 = Color(0xFF69B244)
+val color3 = Color(0xFFCFE567)
+val color4 = Color(0xFFF27230)
