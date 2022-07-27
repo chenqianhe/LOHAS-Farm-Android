@@ -1,16 +1,9 @@
 package com.example.lohasfarm.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
-
-enum class StylePallet {
-    DARK,
-    LIGHT
-}
 
 
 private val LfDarkColorPalette = LfColors(
@@ -63,6 +56,12 @@ fun LOHASFarmTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     } else {
         LfLightColorPalette
     }
+    val typography = if (darkTheme) {
+        LfDarkFontPalette
+    } else {
+        LfLightFontPalette
+    }
+
     val sysUiController = rememberSystemUiController()
     SideEffect {
         sysUiController.setSystemBarsColor(
@@ -72,7 +71,7 @@ fun LOHASFarmTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
 
     ProvideLfColors(colors) {
         MaterialTheme(
-            typography = Typography,
+            typography = typography,
             shapes = Shapes,
             content = content
         )
