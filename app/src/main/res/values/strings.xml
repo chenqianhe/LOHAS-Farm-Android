@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">LOHAS Farm</string>
+    <string name="app_name">乐活农场</string>
+    <string name="farm_page">农场</string>
+    <string name="activity">活动</string>
+    <string name="message">消息</string>
+    <string name="mine">我的</string>
 </resources>

@@ -24,26 +24,38 @@ fun calSize(RawPx: Number): Double {
 
 // 为了便捷开发使用原本的字体系统代指自己设计的字体系统
 val LfLightFontPalette = Typography(
-    // nav-bar-font
+    // nav-bar
     h1 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Medium,
         fontSize = calSize(20).sp
     ),
-    // tab-selected-font
+    // tab-default
     h2 = TextStyle(
-        fontFamily = ALIBABAPUHUITI2,
-        fontWeight = FontWeight.Medium,
-        fontSize = calSize(20).sp
-    ),
-    // tab-font
-    h3 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Normal,
         fontSize = calSize(20).sp
     ),
-    // button-base-font
+    // tab-highlight
+    h3 = TextStyle(
+        fontFamily = ALIBABAPUHUITI2,
+        fontWeight = FontWeight.Medium,
+        fontSize = calSize(20).sp
+    ),
+    // tab-bar-default
     h4 = TextStyle(
+        fontFamily = ALIBABAPUHUITI2,
+        fontWeight = FontWeight.Normal,
+        fontSize = calSize(12).sp
+    ),
+    // tab-bar-select
+    overline = TextStyle(
+        fontFamily = ALIBABAPUHUITI2,
+        fontWeight = FontWeight.Medium,
+        fontSize = calSize(12).sp
+    ),
+    // button
+    button = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Medium,
         fontSize = calSize(16).sp
@@ -52,7 +64,7 @@ val LfLightFontPalette = Typography(
     h5 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Medium,
-        fontSize = calSize(20).sp
+        fontSize = calSize(16).sp
     ),
     // emphasize
     h6 = TextStyle(
@@ -81,26 +93,38 @@ val LfLightFontPalette = Typography(
 )
 
 val LfDarkFontPalette = Typography(
-    // nav-bar-font
+    // nav-bar
     h1 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Medium,
         fontSize = calSize(20).sp
     ),
-    // tab-selected-font
+    // tab-default
     h2 = TextStyle(
-        fontFamily = ALIBABAPUHUITI2,
-        fontWeight = FontWeight.Medium,
-        fontSize = calSize(20).sp
-    ),
-    // tab-font
-    h3 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Normal,
         fontSize = calSize(20).sp
     ),
-    // button-base-font
+    // tab-highlight
+    h3 = TextStyle(
+        fontFamily = ALIBABAPUHUITI2,
+        fontWeight = FontWeight.Medium,
+        fontSize = calSize(20).sp
+    ),
+    // tab-bar-default
     h4 = TextStyle(
+        fontFamily = ALIBABAPUHUITI2,
+        fontWeight = FontWeight.Normal,
+        fontSize = calSize(12).sp
+    ),
+    // tab-bar-select
+    overline = TextStyle(
+        fontFamily = ALIBABAPUHUITI2,
+        fontWeight = FontWeight.Medium,
+        fontSize = calSize(12).sp
+    ),
+    // button
+    button = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Medium,
         fontSize = calSize(16).sp
@@ -109,7 +133,7 @@ val LfDarkFontPalette = Typography(
     h5 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
         fontWeight = FontWeight.Medium,
-        fontSize = calSize(20).sp
+        fontSize = calSize(16).sp
     ),
     // emphasize
     h6 = TextStyle(
