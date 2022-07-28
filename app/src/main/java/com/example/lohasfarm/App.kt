@@ -8,17 +8,17 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class App : Application() {
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        var context: Context? = null
-    }
+//    companion object {
+//        @SuppressLint("StaticFieldLeak")
+//        var context: Context? = null
+//    }
 
 //    private var dataStore = DataStoreUtils
 
-    override fun onCreate() {
-        super.onCreate()
+//    override fun onCreate() {
+//        super.onCreate()
 //        context = applicationContext
 
-    }
+//    }
 
 }
