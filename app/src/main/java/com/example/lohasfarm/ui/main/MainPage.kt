@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,7 +44,7 @@ fun MainPage(actions: Actions) {
                             } else {
                                 painterResource(tab.icon)
                             }
-                            Icon(painter, contentDescription = null)
+                            Icon(painter, contentDescription = null,  tint= Color.Unspecified)
                         },
                         label = { Text(stringResource(tab.title).uppercase(Locale.ROOT),
                             color = if (tab == position) {
