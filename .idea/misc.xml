@@ -3,11 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable/ic_activity_page.xml" value="0.189" />
         <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable/ic_activity_page_selected.xml" value="0.189" />
         <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable/ic_farm_page.xml" value="0.1635" />
+        <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.103" />
+        <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.106" />
+        <entry key="..\:/Dev/LOHAS-Farm-Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.178" />
       </map>
     </option>
   </component>
