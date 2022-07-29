@@ -1,8 +1,10 @@
 package com.example.lohasfarm.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -65,7 +67,8 @@ fun LOHASFarmTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     val sysUiController = rememberSystemUiController()
     SideEffect {
         sysUiController.setSystemBarsColor(
-            color = colors.background.copy()
+            color = colors.background.copy(),
+            darkIcons = true
         )
     }
 
