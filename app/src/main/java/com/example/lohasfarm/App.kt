@@ -3,6 +3,7 @@ package com.example.lohasfarm
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.example.lohasfarm.logic.utils.DataStoreUtils
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -13,11 +14,15 @@ class App : Application() {
         var context: Context? = null
     }
 
-//    private var dataStore = DataStoreUtils
+    private var dataStore = DataStoreUtils
 
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+
+        DataStoreUtils.init(applicationContext)
+
+
     }
 
 }
