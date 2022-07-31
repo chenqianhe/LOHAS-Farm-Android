@@ -15,4 +15,16 @@ class Actions(navController: NavHostController) {
     val upPress: () -> Unit = {
         navController.navigateUp()
     }
+
+    /**
+     * 清理栈中页面，实现后续页面返回直接到桌面
+     */
+    val clearBackStack: () -> Unit = {
+        while (!navController.backQueue.isEmpty()) {
+            navController.popBackStack(navController.currentDestination!!.id,
+                inclusive = true,
+                saveState = false
+            )
+        }
+    }
 }

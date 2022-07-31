@@ -12,6 +12,7 @@ import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.utils.StateCode
 import com.example.lohasfarm.ui.utils.showToast
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -26,7 +27,7 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
 
     private val accountRepository = AccountRepository()
 
-    fun login(account: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun login(account: String, password: String) = viewModelScope.async(Dispatchers.IO) {
         val loginModel: BaseModel<LoginModel> = accountRepository.login(account, password)
         Log.i(TAG, loginModel.msg)
         Log.i(TAG, loginModel.content.uuid)

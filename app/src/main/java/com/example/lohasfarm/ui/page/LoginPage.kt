@@ -10,8 +10,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.viewModel.LoginPageViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
+import com.example.lohasfarm.ui.main.nav.Destinations
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,8 +40,11 @@ fun LoginPage(actions: Actions) {
         ){
             Button(onClick = {
                 scope.launch(Dispatchers.Main) {
-                    viewModel.login("15319872135", "123456")
-                    actions.toMainPage()
+                    viewModel.login("15319872135", "123456").await()
+                    if (LfState.isLogin) {
+                        actions.clearBackStack()
+                        actions.toMainPage()
+                    }
                 }
             }) {
                 Text("Login")
