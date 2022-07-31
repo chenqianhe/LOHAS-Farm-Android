@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "f9861f13d73095dd1aa64d22bf1eb235",
+    "entities": [
+      {
+        "tableName": "FarmInfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`land_uid` TEXT NOT NULL, `land_name` TEXT, `land_profile_photo` TEXT NOT NULL, `mine` INTEGER NOT NULL, PRIMARY KEY(`land_uid`))",
+        "fields": [
+          {
+            "fieldPath": "landUid",
+            "columnName": "land_uid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landName",
+            "columnName": "land_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "landProfilePhoto",
+            "columnName": "land_profile_photo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isMine",
+            "columnName": "mine",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "land_uid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9861f13d73095dd1aa64d22bf1eb235')"
+    ]
+  }
+}

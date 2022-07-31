@@ -12,6 +12,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.lohasfarm.R
 import com.example.lohasfarm.logic.utils.LfState
+import com.example.lohasfarm.logic.viewModel.FarmPageViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
 
@@ -19,7 +20,7 @@ import com.example.lohasfarm.ui.theme.LOHASFarmTheme
 private const val TAG = "FARM_PAGE"
 
 @Composable
-fun FarmPage(actions: Actions) {
+fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -41,12 +42,14 @@ fun FarmPage(actions: Actions) {
                     style = MaterialTheme.typography.h1)
         }
 
-        Button(onClick = {
-            LfState.clearAll()
-            actions.toLoginPage()
-        }) {
-            Text(text = "Log out")
-        }
+//        Button(onClick = {
+//            LfState.clearAll()
+//            actions.toLoginPage()
+//        }) {
+//            Text(text = "Log out")
+//        }
+
+//        Text(text = `的农场`)
 
     }
 }

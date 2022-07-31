@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.lohasfarm.logic.viewModel.FarmPageViewModel
 import com.example.lohasfarm.logic.viewModel.HomeViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Tabs
@@ -31,6 +32,8 @@ fun MainPage(actions: Actions) {
     val viewModel: HomeViewModel = hiltViewModel()
     val position by viewModel.position.observeAsState()
     val tabs = Tabs.values()
+
+    val farmPageViewModel: FarmPageViewModel = hiltViewModel()
 
     Scaffold(
         backgroundColor = LOHASFarmTheme.colors.background,
@@ -70,7 +73,10 @@ fun MainPage(actions: Actions) {
             val modifier = Modifier.padding(innerPadding)
             Crossfade(targetState = position) { screen ->
                 when (screen) {
-                    Tabs.FARM_PAGE -> FarmPage(actions)
+                    Tabs.FARM_PAGE -> {
+                        farmPageViewModel.updateLandInfo()
+                        FarmPage(actions, farmPageViewModel)
+                    }
                     Tabs.ACTIVITY_PAGE -> ActivityPage()
                     Tabs.MESSAGE_PAGE -> MessagePage()
                     Tabs.MINE_PAGE -> MinePage()

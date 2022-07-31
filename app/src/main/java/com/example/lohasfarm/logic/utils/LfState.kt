@@ -1,10 +1,16 @@
 package com.example.lohasfarm.logic.utils
 
+import com.example.lohasfarm.logic.database.FarmInfo
+import com.example.lohasfarm.logic.database.FarmInfoDao
+import com.example.lohasfarm.logic.database.FarmInfoDatabase
 import com.example.lohasfarm.logic.network.model.BaseModel
+import com.example.lohasfarm.logic.network.model.LandInfoModel
 import com.example.lohasfarm.logic.network.model.LoginModel
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Scope
 
 
 /**
@@ -17,12 +23,28 @@ object LfState {
     private const val USER_ADMIN = "admin"
     private const val IS_LOGIN = "isLogin"
     private lateinit var dataStore: DataStoreUtils
+    private lateinit var landInfoModelDao: FarmInfoDao
+    var landInfo: MutableList<LandInfoModel> = mutableListOf()
 
     /**
      * 初始化
      */
-    fun initialize(dataStoreUtils: DataStoreUtils) {
+    fun initialize(dataStoreUtils: DataStoreUtils, farmInfoDb: FarmInfoDao) {
         dataStore = dataStoreUtils
+        landInfoModelDao = farmInfoDb
+        val farmInfo = landInfoModelDao.queryAll()
+        // 加载本地数据
+        if (this.isLogin) {
+            farmInfo.forEach {
+                landInfo.add(
+                    LandInfoModel(
+                    land_uid = it.landUid,
+                    land_name = it.landName,
+                    land_profile_photo = it.landProfilePhoto,
+                    is_mine = it.isMine)
+                )
+            }
+        }
     }
 
     /**
@@ -89,6 +111,24 @@ object LfState {
             this.uid = loginContent.uid
             this.ugid = loginContent.ugid
             this.admin = loginContent.admin
+        }
+    }
+
+    /**
+     * 存储土地信息
+     */
+    @OptIn(DelicateCoroutinesApi::class)
+    fun saveLandInfo(landInfo: List<LandInfoModel>) {
+        GlobalScope.launch(Dispatchers.IO){
+            landInfoModelDao.deleteAll()
+            val farmInfo = FarmInfo()
+            landInfo.forEach {
+                farmInfo.landUid = it.land_uid
+                farmInfo.landName = it.land_name
+                farmInfo.landProfilePhoto = it.land_profile_photo
+                farmInfo.isMine = it.is_mine
+                landInfoModelDao.insert(farmInfo)
+            }
         }
     }
 

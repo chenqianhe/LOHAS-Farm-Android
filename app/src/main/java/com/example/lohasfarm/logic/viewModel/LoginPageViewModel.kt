@@ -22,7 +22,6 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
         private const val TAG = "LoginViewModel"
     }
 
-    private val _state = MutableLiveData(false)
 
     private val accountRepository = AccountRepository()
 
@@ -33,11 +32,9 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
 
         if (loginModel.code == StateCode.LoginSuccess.code) {
             LfState.isLogin = true
-            _state.postValue(true)
             LfState.saveLoginState(loginModel)
         } else {
             LfState.isLogin = false
-            _state.postValue(false)
         }
 
         withContext(Dispatchers.Main) {
