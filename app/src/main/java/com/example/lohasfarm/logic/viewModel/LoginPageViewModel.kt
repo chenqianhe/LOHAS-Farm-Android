@@ -3,7 +3,6 @@ package com.example.lohasfarm.logic.viewModel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.lohasfarm.logic.network.model.BaseModel
@@ -11,7 +10,6 @@ import com.example.lohasfarm.logic.network.model.LoginModel
 import com.example.lohasfarm.logic.network.repository.AccountRepository
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.utils.StateCode
-import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.utils.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
