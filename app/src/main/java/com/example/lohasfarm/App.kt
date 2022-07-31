@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import com.example.lohasfarm.logic.utils.DataStoreUtils
+import com.example.lohasfarm.logic.utils.LfState
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -21,8 +22,7 @@ class App : Application() {
         context = applicationContext
 
         DataStoreUtils.init(applicationContext)
-
-
+        LfState.initialize(dataStore)
     }
 
 }

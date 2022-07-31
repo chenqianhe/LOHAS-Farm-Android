@@ -10,8 +10,10 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
+import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Destinations
+import com.example.lohasfarm.ui.page.LoginPage
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -20,16 +22,25 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun NavGraph(
-    startDestination: String = Destinations.FARM_ROUTE
+    startDestination: String = Destinations.MAIN_ROUTE
 ) {
     val navController = rememberAnimatedNavController()
     val actions = remember(navController) { Actions(navController) }
+    val finalStartDestination = if (LfState.isLogin) {
+        startDestination
+    } else {
+        Destinations.LOGIN_ROUTE
+    }
     AnimatedNavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = finalStartDestination
     ) {
-        composableHorizontal(Destinations.FARM_ROUTE) {
+        composableHorizontal(Destinations.MAIN_ROUTE) {
             MainPage(actions = actions)
+        }
+
+        composableHorizontal(Destinations.LOGIN_ROUTE) {
+            LoginPage(actions = actions)
         }
     }
 }

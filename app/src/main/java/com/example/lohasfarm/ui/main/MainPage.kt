@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.lohasfarm.logic.viewModel.HomeViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Tabs
 import com.example.lohasfarm.ui.page.activity.ActivityPage
@@ -69,7 +70,7 @@ fun MainPage(actions: Actions) {
             val modifier = Modifier.padding(innerPadding)
             Crossfade(targetState = position) { screen ->
                 when (screen) {
-                    Tabs.FARM_PAGE -> FarmPage()
+                    Tabs.FARM_PAGE -> FarmPage(actions)
                     Tabs.ACTIVITY_PAGE -> ActivityPage()
                     Tabs.MESSAGE_PAGE -> MessagePage()
                     Tabs.MINE_PAGE -> MinePage()

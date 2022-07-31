@@ -1,4 +1,4 @@
-package com.example.lohasfarm.ui.main
+package com.example.lohasfarm.logic.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
