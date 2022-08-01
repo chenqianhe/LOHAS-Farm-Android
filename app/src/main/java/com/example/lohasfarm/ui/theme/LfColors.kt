@@ -23,6 +23,7 @@ class LfColors(
     color2: Color,
     color3: Color,
     color4: Color,
+    color5: Color,
     isLight: Boolean
 ) {
     var navBar by mutableStateOf(navBar, structuralEqualityPolicy())
@@ -76,6 +77,9 @@ class LfColors(
     var color4 by mutableStateOf(color4, structuralEqualityPolicy())
         internal set
 
+    var color5 by mutableStateOf(color5, structuralEqualityPolicy())
+        internal set
+
     var isLight by mutableStateOf(isLight, structuralEqualityPolicy())
         internal set
 
@@ -97,6 +101,7 @@ class LfColors(
         color2,
         color3,
         color4,
+        color5,
         isLight
     )
 
@@ -118,6 +123,7 @@ class LfColors(
         this.color2 = colors.color2
         this.color3 = colors.color3
         this.color4 = colors.color4
+        this.color5 = colors.color5
     }
 
     override fun toString(): String {
@@ -139,6 +145,7 @@ class LfColors(
                 "color2=$color2, " +
                 "color3=$color3, " +
                 "color4=$color4, " +
+                "color5=$color5, " +
                 "isLight=$isLight" +
                 ")"
     }

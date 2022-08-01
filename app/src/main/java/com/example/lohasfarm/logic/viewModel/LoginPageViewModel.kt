@@ -3,6 +3,7 @@ package com.example.lohasfarm.logic.viewModel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.lohasfarm.logic.network.model.BaseModel
@@ -20,6 +21,16 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
 
     companion object {
         private const val TAG = "LoginViewModel"
+    }
+
+    /**
+     * true代表登陆界面， false代表注册界面
+     */
+    private val _loginState = MutableLiveData(true)
+    val loginState: LiveData<Boolean> = _loginState
+
+    fun changeLoginState() {
+        _loginState.value = !_loginState.value!!
     }
 
 
