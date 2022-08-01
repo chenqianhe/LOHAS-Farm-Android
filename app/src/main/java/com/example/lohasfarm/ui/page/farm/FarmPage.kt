@@ -42,12 +42,12 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                     style = MaterialTheme.typography.h1)
         }
 
-//        Button(onClick = {
-//            LfState.clearAll()
-//            actions.toLoginPage()
-//        }) {
-//            Text(text = "Log out")
-//        }
+        Button(onClick = {
+            LfState.clearAll()
+            actions.toLoginPage()
+        }) {
+            Text(text = "Log out")
+        }
 
 //        Text(text = `的农场`)
 
