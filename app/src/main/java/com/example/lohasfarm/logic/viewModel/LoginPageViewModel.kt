@@ -16,6 +16,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
+enum class PASSWORDMODE(val id: Int) {
+    LOGIN(1),
+    REGISTER(2),
+    REGISTER2(3)
+}
+
 
 class LoginPageViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -37,15 +43,30 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
     val account: LiveData<String> = _account
 
     private val _password = MutableLiveData("")
-    val password: LiveData<String> = _password
 
-    private val _password2 = MutableLiveData("")
-    val password2: LiveData<String> = _password2
+    private val _passwordRaw = MutableLiveData("")
+    val passwordRaw: LiveData<String> = _passwordRaw
+
+    private val _accountR = MutableLiveData("")
+    val accountR: LiveData<String> = _accountR
+
+    private val _passwordR = MutableLiveData("")
+
+    private val _passwordRRaw = MutableLiveData("")
+    val passwordRRaw: LiveData<String> = _passwordRRaw
+
+    private val _passwordR2 = MutableLiveData("")
+
+    private val _passwordR2Raw = MutableLiveData("")
+    val passwordR2Raw: LiveData<String> = _passwordR2Raw
+
+    private val _pattern = MutableLiveData("")
+    val pattern: LiveData<String> = _pattern
 
     private val accountRepository = AccountRepository()
 
-    fun login(account: String, password: String) = viewModelScope.async(Dispatchers.IO) {
-        val loginModel: BaseModel<LoginModel> = accountRepository.login(account, password)
+    fun login() = viewModelScope.async(Dispatchers.IO) {
+        val loginModel: BaseModel<LoginModel> = accountRepository.login(_account.value!!, _password.value!!)
         Log.i(TAG, loginModel.msg)
         Log.i(TAG, loginModel.content.uuid)
 
@@ -65,7 +86,54 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
 
     }
 
-    fun updateAccount(it: String) {
-        _account.value = it
+    fun register() {
+        showToast(
+            getApplication(),
+            "注册功能暂未开放"
+        )
     }
+
+    fun updateAccount(it: String) {
+        if (_loginState.value!!) {
+            _account.value = it
+        } else {
+            _accountR.value = it
+        }
+    }
+
+    fun updatePattern(it: String) {
+        _pattern.value = it
+    }
+
+    fun updatePassword(tag: Int, it: String) {
+        when (tag) {
+            PASSWORDMODE.LOGIN.id -> {
+                _password.value = it
+                _passwordRaw.value = if (_password.value!!.isNotEmpty()) {
+                    "*".repeat(_password.value!!.length)
+                } else {
+                    ""
+                }
+            }
+
+            PASSWORDMODE.REGISTER.id -> {
+                _passwordR.value = it
+                _passwordRRaw.value = if (_passwordR.value!!.isNotEmpty()) {
+                    "*".repeat(_passwordR.value!!.length)
+                } else {
+                    ""
+                }
+            }
+
+            else -> {
+                _passwordR2.value = it
+                _passwordR2Raw.value = if (_passwordR2.value!!.isNotEmpty()) {
+                    "*".repeat(_passwordR2.value!!.length)
+                } else {
+                    ""
+                }
+            }
+        }
+    }
+
 }

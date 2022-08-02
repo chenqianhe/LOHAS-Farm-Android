@@ -1,7 +1,6 @@
 package com.example.lohasfarm.ui.page
 
 
-import android.widget.EditText
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,16 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lohasfarm.R
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.viewModel.LoginPageViewModel
+import com.example.lohasfarm.logic.viewModel.PASSWORDMODE
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
 import kotlinx.coroutines.CoroutineScope
@@ -49,26 +47,28 @@ fun LoginPage(actions: Actions) {
 
     val loginState by viewModel.loginState.observeAsState()
     val accountState by viewModel.account.observeAsState()
-    val passwordState by viewModel.password.observeAsState()
-    val password2State by viewModel.password2.observeAsState()
+    val passwordRawState by viewModel.passwordRaw.observeAsState()
 
+    val accountRStater by viewModel.accountR.observeAsState()
+    val passwordRRawState by viewModel.passwordRRaw.observeAsState()
+    val passwordR2RawState by viewModel.passwordR2Raw.observeAsState()
+    val patternState by viewModel.pattern.observeAsState()
 
 
     Scaffold(
         backgroundColor = LOHASFarmTheme.colors.background
     ){ innerPadding ->
-        val bottomPadding = innerPadding
-        val modifier = Modifier
+        val modifier = Modifier.padding(innerPadding)
         Box(contentAlignment = Alignment.TopCenter,
-
             modifier = modifier
                 .fillMaxWidth()
                 .padding(0.dp)){
             Image(
-                painter = painterResource(id = R.drawable.ic_login_page_background),
+                modifier = modifier.fillMaxWidth(),
+                painter = painterResource(id = R.drawable.login_page_background),
                 contentDescription = "login_page_background",
                 alignment = Alignment.Center,
-                contentScale = ContentScale.FillBounds)
+                contentScale = ContentScale.Crop)
 
             Column(modifier = modifier
                 .fillMaxWidth()
@@ -79,42 +79,37 @@ fun LoginPage(actions: Actions) {
 
                 SwitchButtons(modifier, loginState!!, viewModel)
 
-                Spacer(modifier = modifier.height(50.dp).fillMaxWidth().padding(0.dp))
+                Spacer(modifier = modifier
+                    .height(62.4.dp)
+                    .fillMaxWidth()
+                    .padding(0.dp))
 
                 if (loginState!!) {
-//                    InputArea(modifier = modifier, title = "邮箱", state = accountState!!)
-                    TextField(
-                        singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
-                            focusedIndicatorColor = LOHASFarmTheme.colors.color,
-                            unfocusedIndicatorColor = LOHASFarmTheme.colors.color,
-                            backgroundColor = LOHASFarmTheme.colors.white,
-                            cursorColor = LOHASFarmTheme.colors.background
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            capitalization = KeyboardCapitalization.Characters,
-                            keyboardType = KeyboardType.Email,
-                            autoCorrect = true,
-                            imeAction = ImeAction.Next
-                        ),
-                        value = accountState!!,
-                        onValueChange = { viewModel.updateAccount(it) },
-                        label = { Text(
-                            text = "邮箱",
-                            style = MaterialTheme.typography.body2,
-                            color = LOHASFarmTheme.colors.color
-                        )}
+                    LoginArea(
+                        modifier = modifier,
+                        accountState = accountState,
+                        passwordState = passwordRawState,
+                        viewModel = viewModel)
+                } else {
+                    RegisterArea(
+                        modifier = modifier,
+                        accountState = accountRStater,
+                        passwordState = passwordRRawState,
+                        password2State = passwordR2RawState,
+                        patternState = patternState,
+                        viewModel = viewModel
                     )
-                    LoginButton(modifier, scope, viewModel, actions)
                 }
 
+                Spacer(modifier = modifier
+                    .height(62.4.dp)
+                    .fillMaxWidth()
+                    .padding(0.dp))
 
+                LoginButton(modifier, scope, loginState, viewModel, actions)
             }
-
-
         }
     }
-
 }
 
 
@@ -246,6 +241,7 @@ fun SwitchButtons(modifier: Modifier,
 @Composable
 fun LoginButton(modifier: Modifier,
                 scope: CoroutineScope,
+                loginState: Boolean?,
                 viewModel: LoginPageViewModel,
                 actions: Actions) {
     Button(
@@ -255,12 +251,16 @@ fun LoginButton(modifier: Modifier,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = LOHASFarmTheme.colors.background),
         onClick = {
-            scope.launch(Dispatchers.Main) {
-                viewModel.login("15319872135", "123456").await()
-                if (LfState.isLogin) {
-                    actions.clearBackStack()
-                    actions.toMainPage()
+            if (loginState!!) {
+                scope.launch(Dispatchers.Main) {
+                    viewModel.login().await()
+                    if (LfState.isLogin) {
+                        actions.clearBackStack()
+                        actions.toMainPage()
+                    }
                 }
+            } else {
+                viewModel.register()
             }
         }) {
         Text(modifier = modifier
@@ -277,26 +277,178 @@ fun LoginButton(modifier: Modifier,
             .padding(127.dp, 11.55.dp),
             color = LOHASFarmTheme.colors.white,
             style = MaterialTheme.typography.button,
-            text = "登 录")
+            text = if (loginState!!) {
+                "登 录"
+            } else {
+                "注 册"
+            })
     }
 }
 
 
-//@Composable
-//fun InputArea(modifier: Modifier,
-//              title: String,
-//              state: String) {
-//    Column(
-//        modifier = modifier
-//            .height(57.2.dp)
-//            .width(ITEM_WIDTH)
-//            .padding(0.dp),
-//        horizontalAlignment = Alignment.Start) {
-//
-//        Text(text = title,
-//            style = MaterialTheme.typography.body2,
-//            color = LOHASFarmTheme.colors.color)
-//
-//        Tex
-//    }
-//}
+@Composable
+fun LoginArea(modifier: Modifier,
+              accountState: String?,
+              passwordState: String?,
+              viewModel: LoginPageViewModel) {
+    TextField(
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+            unfocusedIndicatorColor = LOHASFarmTheme.colors.color6,
+            backgroundColor = LOHASFarmTheme.colors.color7,
+            cursorColor = LOHASFarmTheme.colors.color,
+            disabledTextColor = LOHASFarmTheme.colors.color6
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next
+        ),
+        value = accountState!!,
+        onValueChange = { viewModel.updateAccount(it) },
+        label = { Text(
+            text = "邮箱",
+            style = MaterialTheme.typography.body2,
+            color = LOHASFarmTheme.colors.color
+        )}
+    )
+
+    Spacer(modifier = modifier
+        .height(20.8.dp)
+        .fillMaxWidth()
+        .padding(0.dp))
+
+    TextField(
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+            unfocusedIndicatorColor = LOHASFarmTheme.colors.color6,
+            backgroundColor = LOHASFarmTheme.colors.color7,
+            cursorColor = LOHASFarmTheme.colors.color,
+            disabledTextColor = LOHASFarmTheme.colors.color6
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
+        value = passwordState!!,
+        onValueChange = { viewModel.updatePassword(PASSWORDMODE.LOGIN.id, it) },
+        label = { Text(
+            text = "密码",
+            style = MaterialTheme.typography.body2,
+            color = LOHASFarmTheme.colors.color
+        )}
+    )
+}
+
+
+@Composable
+fun RegisterArea(modifier: Modifier,
+              accountState: String?,
+              passwordState: String?,
+              password2State: String?,
+              patternState: String?,
+              viewModel: LoginPageViewModel) {
+    TextField(
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+            unfocusedIndicatorColor = LOHASFarmTheme.colors.color6,
+            backgroundColor = LOHASFarmTheme.colors.color7,
+            cursorColor = LOHASFarmTheme.colors.color,
+            disabledTextColor = LOHASFarmTheme.colors.color6
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next
+        ),
+        value = accountState!!,
+        onValueChange = { viewModel.updateAccount(it) },
+        label = { Text(
+            text = "邮箱",
+            style = MaterialTheme.typography.body2,
+            color = LOHASFarmTheme.colors.color
+        )}
+    )
+
+    Spacer(modifier = modifier
+        .height(20.8.dp)
+        .fillMaxWidth()
+        .padding(0.dp))
+
+    TextField(
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+            unfocusedIndicatorColor = LOHASFarmTheme.colors.color6,
+            backgroundColor = LOHASFarmTheme.colors.color7,
+            cursorColor = LOHASFarmTheme.colors.color,
+            disabledTextColor = LOHASFarmTheme.colors.color6
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Next
+        ),
+        value = passwordState!!,
+        onValueChange = { viewModel.updatePassword(PASSWORDMODE.REGISTER.id, it) },
+        label = { Text(
+            text = "密码",
+            style = MaterialTheme.typography.body2,
+            color = LOHASFarmTheme.colors.color
+        )}
+    )
+
+    Spacer(modifier = modifier
+        .height(20.8.dp)
+        .fillMaxWidth()
+        .padding(0.dp))
+
+    TextField(
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+            unfocusedIndicatorColor = LOHASFarmTheme.colors.color6,
+            backgroundColor = LOHASFarmTheme.colors.color7,
+            cursorColor = LOHASFarmTheme.colors.color,
+            disabledTextColor = LOHASFarmTheme.colors.color6
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Next
+        ),
+        value = password2State!!,
+        onValueChange = { viewModel.updatePassword(PASSWORDMODE.REGISTER2.id, it) },
+        label = { Text(
+            text = "确认密码",
+            style = MaterialTheme.typography.body2,
+            color = LOHASFarmTheme.colors.color
+        )}
+    )
+
+    Spacer(modifier = modifier
+        .height(20.8.dp)
+        .fillMaxWidth()
+        .padding(0.dp))
+
+    TextField(
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+            unfocusedIndicatorColor = LOHASFarmTheme.colors.color6,
+            backgroundColor = LOHASFarmTheme.colors.color7,
+            cursorColor = LOHASFarmTheme.colors.color,
+            disabledTextColor = LOHASFarmTheme.colors.color6
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Done
+        ),
+        value = patternState!!,
+        onValueChange = { viewModel.updatePattern(it) },
+        label = { Text(
+            text = "套餐",
+            style = MaterialTheme.typography.body2,
+            color = LOHASFarmTheme.colors.color
+        )}
+    )
+}
