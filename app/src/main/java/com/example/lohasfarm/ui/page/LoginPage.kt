@@ -23,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lohasfarm.R
@@ -47,11 +48,11 @@ fun LoginPage(actions: Actions) {
 
     val loginState by viewModel.loginState.observeAsState()
     val accountState by viewModel.account.observeAsState()
-    val passwordRawState by viewModel.passwordRaw.observeAsState()
+    val passwordState by viewModel.password.observeAsState()
 
     val accountRStater by viewModel.accountR.observeAsState()
-    val passwordRRawState by viewModel.passwordRRaw.observeAsState()
-    val passwordR2RawState by viewModel.passwordR2Raw.observeAsState()
+    val passwordRState by viewModel.passwordR.observeAsState()
+    val passwordR2State by viewModel.passwordR2.observeAsState()
     val patternState by viewModel.pattern.observeAsState()
 
 
@@ -88,14 +89,14 @@ fun LoginPage(actions: Actions) {
                     LoginArea(
                         modifier = modifier,
                         accountState = accountState,
-                        passwordState = passwordRawState,
+                        passwordState = passwordState,
                         viewModel = viewModel)
                 } else {
                     RegisterArea(
                         modifier = modifier,
                         accountState = accountRStater,
-                        passwordState = passwordRRawState,
-                        password2State = passwordR2RawState,
+                        passwordState = passwordRState,
+                        password2State = passwordR2State,
                         patternState = patternState,
                         viewModel = viewModel
                     )
@@ -333,6 +334,7 @@ fun LoginArea(modifier: Modifier,
         ),
         value = passwordState!!,
         onValueChange = { viewModel.updatePassword(PASSWORDMODE.LOGIN.id, it) },
+        visualTransformation = PasswordVisualTransformation(),
         label = { Text(
             text = "密码",
             style = MaterialTheme.typography.body2,
@@ -391,6 +393,7 @@ fun RegisterArea(modifier: Modifier,
         ),
         value = passwordState!!,
         onValueChange = { viewModel.updatePassword(PASSWORDMODE.REGISTER.id, it) },
+        visualTransformation = PasswordVisualTransformation(),
         label = { Text(
             text = "密码",
             style = MaterialTheme.typography.body2,
@@ -418,6 +421,7 @@ fun RegisterArea(modifier: Modifier,
         ),
         value = password2State!!,
         onValueChange = { viewModel.updatePassword(PASSWORDMODE.REGISTER2.id, it) },
+        visualTransformation = PasswordVisualTransformation(),
         label = { Text(
             text = "确认密码",
             style = MaterialTheme.typography.body2,
