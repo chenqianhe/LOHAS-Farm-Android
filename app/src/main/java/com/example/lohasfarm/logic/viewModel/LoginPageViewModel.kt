@@ -33,6 +33,14 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
         _loginState.value = !_loginState.value!!
     }
 
+    private val _account = MutableLiveData("")
+    val account: LiveData<String> = _account
+
+    private val _password = MutableLiveData("")
+    val password: LiveData<String> = _password
+
+    private val _password2 = MutableLiveData("")
+    val password2: LiveData<String> = _password2
 
     private val accountRepository = AccountRepository()
 
@@ -55,5 +63,9 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
             )
         }
 
+    }
+
+    fun updateAccount(it: String) {
+        _account.value = it
     }
 }

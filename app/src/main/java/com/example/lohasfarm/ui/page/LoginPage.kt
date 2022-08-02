@@ -1,7 +1,7 @@
 package com.example.lohasfarm.ui.page
 
 
-import android.util.Log
+import android.widget.EditText
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,8 +9,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -21,16 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
 import com.example.lohasfarm.R
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.viewModel.LoginPageViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
-import com.example.lohasfarm.ui.theme.background
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,6 +48,11 @@ fun LoginPage(actions: Actions) {
     val scope = rememberCoroutineScope()
 
     val loginState by viewModel.loginState.observeAsState()
+    val accountState by viewModel.account.observeAsState()
+    val passwordState by viewModel.password.observeAsState()
+    val password2State by viewModel.password2.observeAsState()
+
+
 
     Scaffold(
         backgroundColor = LOHASFarmTheme.colors.background
@@ -67,11 +74,37 @@ fun LoginPage(actions: Actions) {
                 .fillMaxWidth()
                 .padding(0.dp, 240.dp, 0.dp, 0.dp),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
                 SwitchButtons(modifier, loginState!!, viewModel)
 
+                Spacer(modifier = modifier.height(50.dp).fillMaxWidth().padding(0.dp))
+
                 if (loginState!!) {
+//                    InputArea(modifier = modifier, title = "邮箱", state = accountState!!)
+                    TextField(
+                        singleLine = true,
+                        colors = TextFieldDefaults.textFieldColors(
+                            focusedIndicatorColor = LOHASFarmTheme.colors.color,
+                            unfocusedIndicatorColor = LOHASFarmTheme.colors.color,
+                            backgroundColor = LOHASFarmTheme.colors.white,
+                            cursorColor = LOHASFarmTheme.colors.background
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            capitalization = KeyboardCapitalization.Characters,
+                            keyboardType = KeyboardType.Email,
+                            autoCorrect = true,
+                            imeAction = ImeAction.Next
+                        ),
+                        value = accountState!!,
+                        onValueChange = { viewModel.updateAccount(it) },
+                        label = { Text(
+                            text = "邮箱",
+                            style = MaterialTheme.typography.body2,
+                            color = LOHASFarmTheme.colors.color
+                        )}
+                    )
                     LoginButton(modifier, scope, viewModel, actions)
                 }
 
@@ -86,25 +119,32 @@ fun LoginPage(actions: Actions) {
 
 
 @Composable
-fun SwitchButtons(modifier: Modifier, loginState: Boolean, viewModel: LoginPageViewModel) {
+fun SwitchButtons(modifier: Modifier,
+                  loginState: Boolean,
+                  viewModel: LoginPageViewModel) {
     Column(
-        modifier = modifier.height(32.dp)
+        modifier = modifier
+            .height(32.dp)
             .width(ITEM_WIDTH)
             .padding(0.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        Row(modifier = modifier.padding(0.dp).height(29.4.dp),
+        Row(modifier = modifier
+            .padding(0.dp)
+            .height(29.4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
             Button(
-                modifier = modifier.height(29.4.dp)
+                modifier = modifier
+                    .height(29.4.dp)
                     .clickable(
-                    interactionSource =  remember { MutableInteractionSource() },
-                    indication = null){
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
                         if (!loginState) {
                             viewModel.changeLoginState()
                         }
-            },
+                    },
                 contentPadding = PaddingValues(0.dp),
                 elevation = ButtonDefaults.elevation(0.dp),
                 border = BorderStroke(0.dp, Color(0)),
@@ -175,14 +215,21 @@ fun SwitchButtons(modifier: Modifier, loginState: Boolean, viewModel: LoginPageV
             }
         }
 
-        Row(modifier = modifier.padding(0.dp).height(1.dp).width(if (loginState) {
-                40.dp
-            } else {
-                105.dp
-            }),
+        Row(modifier = modifier
+            .padding(0.dp)
+            .height(1.dp)
+            .width(
+                if (loginState) {
+                    40.dp
+                } else {
+                    105.dp
+                }
+            ),
             horizontalArrangement = Arrangement.SpaceBetween){
 
-            Spacer(modifier = modifier.width(1.dp).height(1.dp))
+            Spacer(modifier = modifier
+                .width(1.dp)
+                .height(1.dp))
 
             Box(
                 modifier = modifier
@@ -233,3 +280,23 @@ fun LoginButton(modifier: Modifier,
             text = "登 录")
     }
 }
+
+
+//@Composable
+//fun InputArea(modifier: Modifier,
+//              title: String,
+//              state: String) {
+//    Column(
+//        modifier = modifier
+//            .height(57.2.dp)
+//            .width(ITEM_WIDTH)
+//            .padding(0.dp),
+//        horizontalAlignment = Alignment.Start) {
+//
+//        Text(text = title,
+//            style = MaterialTheme.typography.body2,
+//            color = LOHASFarmTheme.colors.color)
+//
+//        Tex
+//    }
+//}

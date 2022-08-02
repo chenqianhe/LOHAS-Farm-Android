@@ -3,11 +3,11 @@
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
-        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/green</item>
 
         <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
              animated drawable. One of these is required. -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/launcher_page_logo_large</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/launcher_page_logo_title</item>
         <!-- Required for animated icons -->
         <item name="windowSplashScreenAnimationDuration">1000</item>
 
@@ -18,6 +18,6 @@
 
     <style name="Theme.LOHASFarm" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:background">@drawable/launcher_page</item>
+        <item name="android:background">@color/white</item>
     </style>
 </resources>
