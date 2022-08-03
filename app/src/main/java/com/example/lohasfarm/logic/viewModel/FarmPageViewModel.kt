@@ -22,9 +22,13 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
     companion object {
         private const val TAG = "FarmPageViewModel"
     }
-    private val _landInfoState = MutableLiveData<List<LandInfoModel>>(LfState.landInfo)
+
     private val farmPageRepository = FarmPageRepository()
 
+    /**
+     * 默认使用本地缓存，再异步更新数据
+     */
+    private val _landInfoState = MutableLiveData<List<LandInfoModel>>(LfState.landInfo)
     val landInfoState: LiveData<List<LandInfoModel>>
         get() = _landInfoState
 
@@ -33,9 +37,12 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
             val farmInfoModel = farmPageRepository.getLandData(LfState.uuid)
             Log.i(TAG, farmInfoModel.code.toString())
             Log.i(TAG, farmInfoModel.msg)
+            Log.i(TAG, farmInfoModel.content.size.toString())
 
             if (farmInfoModel.code == StateCode.GetLandInfoSuccess.code) {
                 _landInfoState.value = farmInfoModel.content
+                // 本地缓存土地数据
+                LfState.saveLandInfo(farmInfoModel.content)
             }
 
             withContext(Dispatchers.Main) {

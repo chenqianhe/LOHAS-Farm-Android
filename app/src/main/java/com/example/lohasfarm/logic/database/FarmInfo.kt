@@ -12,7 +12,7 @@ class FarmInfo {
     var landUid: String = ""
 
     @ColumnInfo(name = "land_name")
-    var landName: String? = ""
+    var landName: String = ""
 
     @ColumnInfo(name = "land_profile_photo")
     var landProfilePhoto: String = "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0"
