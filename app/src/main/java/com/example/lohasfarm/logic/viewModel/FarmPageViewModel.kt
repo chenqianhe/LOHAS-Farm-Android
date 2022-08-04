@@ -32,6 +32,8 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
     val landInfoState: LiveData<List<LandInfoModel>>
         get() = _landInfoState
 
+    var index = 0
+
     fun updateLandInfo() {
         viewModelScope.launch {
             val farmInfoModel = farmPageRepository.getLandData(LfState.uuid)
@@ -40,6 +42,8 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
             Log.i(TAG, farmInfoModel.content.size.toString())
 
             if (farmInfoModel.code == StateCode.GetLandInfoSuccess.code) {
+                // 刷新index，否则会导致取值越界
+                index = 0
                 _landInfoState.value = farmInfoModel.content
                 // 本地缓存土地数据
                 LfState.saveLandInfo(farmInfoModel.content)

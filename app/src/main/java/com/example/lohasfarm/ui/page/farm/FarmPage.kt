@@ -42,8 +42,6 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
         arrayOf(37.44, 348.4), arrayOf(167.44, 348.4), arrayOf(298.48, 348.4)
     )
 
-    var index = 0
-
     Scaffold(
         backgroundColor = LOHASFarmTheme.colors.background){ innerPadding ->
         val modifier = Modifier.padding(innerPadding)
@@ -71,11 +69,11 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                     } else {
                         LandSign(name = it.land_name,
                             url = it.land_profile_photo,
-                            modifier = Modifier.padding(paddings[index][0].dp, paddings[index][1].dp, 0.dp, 0.dp))
+                            modifier = Modifier.padding(paddings[farmPageViewModel.index][0].dp, paddings[farmPageViewModel.index][1].dp, 0.dp, 0.dp))
 
                         // 第5个是个人的放大后padding
-                        index = if (index < 3 || index > 4) {
-                            index + 1
+                        farmPageViewModel.index = if (farmPageViewModel.index < 3 || farmPageViewModel.index > 4) {
+                            farmPageViewModel.index + 1
                         } else {
                             5
                         }
