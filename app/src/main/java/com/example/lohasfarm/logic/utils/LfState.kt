@@ -22,6 +22,7 @@ object LfState {
     private const val USER_UID = "uid"
     private const val USER_ADMIN = "admin"
     private const val IS_LOGIN = "isLogin"
+    private const val LAND_NAME = "landName"
     private lateinit var dataStore: DataStoreUtils
     private lateinit var landInfoModelDao: FarmInfoDao
     var landInfo: MutableList<LandInfoModel> = mutableListOf()
@@ -98,6 +99,15 @@ object LfState {
         get() = dataStore.getDataSync(USER_ADMIN, 0)
         set(value) {
             dataStore.putDataSync(USER_ADMIN, value)
+        }
+
+    /**
+     * 土地名称
+     */
+    var landName: String
+        get() = dataStore.getDataSync(LAND_NAME, "我")
+        set(value) {
+            dataStore.putDataSync(LAND_NAME, value)
         }
 
     /**

@@ -14,9 +14,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -41,6 +44,9 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
         arrayOf(37.44, 242.32), arrayOf(163.28, 225.68), arrayOf(298.48, 242.32),
         arrayOf(37.44, 348.4), arrayOf(167.44, 348.4), arrayOf(298.48, 348.4)
     )
+    val landName = remember {
+        mutableStateOf(LfState.landName)
+    }
 
     Scaffold(
         backgroundColor = LOHASFarmTheme.colors.background){ innerPadding ->
@@ -66,13 +72,17 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                             url = it.land_profile_photo,
                             modifier = Modifier.padding(paddings[4][0].dp, paddings[4][1].dp, 0.dp, 0.dp),
                             isLarge = true)
+                        landName.value = it.land_name
+                        LfState.landName = it.land_name
                     } else {
                         LandSign(name = it.land_name,
                             url = it.land_profile_photo,
                             modifier = Modifier.padding(paddings[farmPageViewModel.index][0].dp, paddings[farmPageViewModel.index][1].dp, 0.dp, 0.dp))
 
                         // 第5个是个人的放大后padding
-                        farmPageViewModel.index = if (farmPageViewModel.index < 3 || farmPageViewModel.index > 4) {
+                        farmPageViewModel.index = if (farmPageViewModel.index > 7) {
+                            0
+                        } else if (farmPageViewModel.index < 3 || farmPageViewModel.index > 4) {
                             farmPageViewModel.index + 1
                         } else {
                             5
@@ -80,13 +90,22 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                     }
                 }
             }
-
-            Button(onClick = {
-                LfState.clearAll()
-                actions.toLoginPage()
-            }) {
-                Text(text = "Log out")
+            Column(
+                modifier = modifier.fillMaxWidth().padding(0.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text(text = landName.value + "的农场",
+                    color = LOHASFarmTheme.colors.headline,
+                    style = MaterialTheme.typography.h5,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(20.8.dp, 16.64.dp, 0.dp, 12.48.dp)
+                        .height(22.88.dp))
+                PlantCard("小番茄", "https://7072-prod-0gem4gzhcdae3027-1311785555.tcb.qcloud.la/plant/%E5%B0%8F%E7%95%AA%E8%8C%84.png?sign=18b0bf7d33cc9112ed9d293721c4b79b&t=1659622032",
+                    "发芽", 30, 60)
             }
+
+
         }
     }
 
@@ -185,5 +204,75 @@ fun LandSign(name: String?, url: String, modifier: Modifier = Modifier, isLarge:
             style = MaterialTheme.typography.caption,
             textAlign = TextAlign.Center)
 
+    }
+}
+
+
+@Composable
+fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int) {
+    Column(modifier = Modifier
+        .padding(0.dp)
+        .width(128.96.dp)
+        .height(197.6.dp)
+        .background(LOHASFarmTheme.colors.white),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(modifier = Modifier
+            .padding(12.48.dp)
+            .size(104.dp),
+            painter = rememberAsyncImagePainter(model = url),
+            contentDescription = null,
+            contentScale = ContentScale.Fit)
+        Row(modifier = Modifier
+            .padding(0.dp)
+            .width(104.dp)
+            .height(20.8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(modifier = Modifier
+                .padding(0.dp)
+                .width(43.68.dp),
+                text = name,
+                color = LOHASFarmTheme.colors.body1,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Center)
+
+            Text(text = state,
+                color = LOHASFarmTheme.colors.color1,
+                style = MaterialTheme.typography.caption,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(0.dp)
+                    .width(29.12.dp)
+                    .border(0.52.dp, LOHASFarmTheme.colors.color1))
+        }
+
+        Box(modifier = Modifier
+            .padding(12.48.dp, 8.32.dp)
+            .width(104.dp)
+            .height(4.16.dp)
+            .background(LOHASFarmTheme.colors.background)
+            .shadow(0.dp, RoundedCornerShape(2.08.dp)),
+            contentAlignment = Alignment.TopStart) {
+
+            Box(modifier = Modifier
+                .padding(0.dp)
+                .width((104 * day / totalDay).dp)
+                .height(4.16.dp)
+                .background(
+                    Brush.linearGradient(
+                        listOf(
+                            LOHASFarmTheme.colors.color1,
+                            Color(0x00CFE567)
+                        )
+                    )
+                )
+                .shadow(0.dp, RoundedCornerShape(2.08.dp)))
+        }
+
+        Text(text = day.toString() + "/" + totalDay.toString() + "天",
+            color = LOHASFarmTheme.colors.body1,
+            style = MaterialTheme.typography.caption,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.width(104.dp))
     }
 }
