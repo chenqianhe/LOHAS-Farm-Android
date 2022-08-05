@@ -109,7 +109,7 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                         .padding(20.8.dp, 16.64.dp, 0.dp, 12.48.dp)
                         .height(22.88.dp))
 
-                LazyRow(modifier = Modifier.fillMaxWidth().padding(20.8.dp, 0.dp)) {
+                LazyRow(modifier = Modifier.fillMaxWidth().padding(12.48.dp, 0.dp)) {
                     items(items =  plantIntroInfo!!, key = {data -> data.goods_uid}) { data ->
                         PlantCard(
                             data.goods_name,
@@ -228,7 +228,7 @@ fun LandSign(name: String?, url: String, modifier: Modifier = Modifier, isLarge:
 @Composable
 fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int) {
     Column(modifier = Modifier
-        .padding(0.dp, 0.dp, 16.64.dp, 0.dp)
+        .padding(8.32.dp, 0.dp)
         .shadow(8.32.dp)
         .width(128.96.dp)
         .height(197.6.dp)
@@ -252,7 +252,7 @@ fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int)
                 text = name,
                 color = LOHASFarmTheme.colors.body1,
                 style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.Center)
+                textAlign = TextAlign.Start)
 
             Text(text = state,
                 color = LOHASFarmTheme.colors.color1,
@@ -268,8 +268,8 @@ fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int)
             .padding(12.48.dp, 8.32.dp)
             .width(104.dp)
             .height(4.16.dp)
-            .background(LOHASFarmTheme.colors.background)
-            .shadow(0.dp, RoundedCornerShape(2.08.dp), clip = true),
+            .shadow(0.dp, RoundedCornerShape(2.08.dp), clip = true)
+            .background(LOHASFarmTheme.colors.background),
             contentAlignment = Alignment.TopStart) {
 
             Box(modifier = Modifier
@@ -280,15 +280,15 @@ fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int)
                     0.dp
                 })
                 .height(4.16.dp)
+                .shadow(0.dp, RoundedCornerShape(2.08.dp), clip = true)
                 .background(
                     Brush.linearGradient(
                         listOf(
                             LOHASFarmTheme.colors.color1,
-                            Color(0x00CFE567)
+                            Color(0x80CFE567)
                         )
                     )
-                )
-                .shadow(0.dp, RoundedCornerShape(2.08.dp), clip = true))
+                ))
         }
 
         Text(text = day.toString() + "/" + totalDay.toString() + "天",
