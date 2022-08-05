@@ -39,7 +39,7 @@ val LfLightFontPalette = Typography(
     // tab-highlight
     h3 = TextStyle(
         fontFamily = ALIBABAPUHUITI2,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Normal,
         fontSize = calSize(20).sp
     ),
     // tab-bar-default

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.lohasfarm.logic.viewModel.ActivityPageViewModel
 import com.example.lohasfarm.logic.viewModel.FarmPageViewModel
 import com.example.lohasfarm.logic.viewModel.HomeViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
@@ -30,6 +31,7 @@ private const val TAG = "MainPage"
 @Composable
 fun MainPage(actions: Actions) {
     val viewModel: HomeViewModel = hiltViewModel()
+    val activityModel: ActivityPageViewModel = hiltViewModel()
     val position by viewModel.position.observeAsState()
     val tabs = Tabs.values()
 
@@ -78,7 +80,7 @@ fun MainPage(actions: Actions) {
                         farmPageViewModel.updatePlantIntroInfo()
                         FarmPage(actions, farmPageViewModel)
                     }
-                    Tabs.ACTIVITY_PAGE -> ActivityPage()
+                    Tabs.ACTIVITY_PAGE -> ActivityPage(actions, activityModel)
                     Tabs.MESSAGE_PAGE -> MessagePage()
                     Tabs.MINE_PAGE -> MinePage()
                     else -> {
