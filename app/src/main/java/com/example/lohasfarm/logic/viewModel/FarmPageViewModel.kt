@@ -55,13 +55,14 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
                 LfState.saveLandInfo(farmInfoModel.content)
             }
 
-            withContext(Dispatchers.Main) {
-                showToast(
-                    getApplication(),
-                    farmInfoModel.msg
-                )
+            if (TOAST_TEST) {
+                withContext(Dispatchers.Main) {
+                    showToast(
+                        getApplication(),
+                        farmInfoModel.msg
+                    )
+                }
             }
-
         }
     }
 
@@ -78,14 +79,15 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
                 LfState.savePlantInfo(plantInfoModel.content)
             }
 
-            withContext(Dispatchers.Main) {
-                Log.i(TAG, "!!!!!!")
-                showToast(
-                    getApplication(),
-                    plantInfoModel.msg
-                )
+            if (TOAST_TEST) {
+                withContext(Dispatchers.Main) {
+                    Log.i(TAG, "!!!!!!")
+                    showToast(
+                        getApplication(),
+                        plantInfoModel.msg
+                    )
+                }
             }
-
         }
     }
 
