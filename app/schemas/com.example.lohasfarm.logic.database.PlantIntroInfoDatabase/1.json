@@ -1,0 +1,71 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "feb02f59493754028aa739f6b6507590",
+    "entities": [
+      {
+        "tableName": "PlantIntroInfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`goods_name` TEXT NOT NULL, `goods_uid` TEXT NOT NULL, `land_uid` TEXT NOT NULL, `plant_root_url` TEXT NOT NULL, `plant_state` TEXT NOT NULL, `plant_day` INTEGER NOT NULL, `plant_total_day` INTEGER NOT NULL, PRIMARY KEY(`land_uid`, `goods_uid`))",
+        "fields": [
+          {
+            "fieldPath": "goods_name",
+            "columnName": "goods_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goods_uid",
+            "columnName": "goods_uid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "land_uid",
+            "columnName": "land_uid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plant_root_url",
+            "columnName": "plant_root_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plant_state",
+            "columnName": "plant_state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plant_day",
+            "columnName": "plant_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plant_total_day",
+            "columnName": "plant_total_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "land_uid",
+            "goods_uid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'feb02f59493754028aa739f6b6507590')"
+    ]
+  }
+}

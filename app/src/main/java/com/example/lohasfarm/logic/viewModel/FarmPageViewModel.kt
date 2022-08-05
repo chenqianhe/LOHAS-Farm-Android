@@ -6,7 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.lohasfarm.TOAST_TEST
 import com.example.lohasfarm.logic.network.model.LandInfoModel
+import com.example.lohasfarm.logic.network.model.PlantIntroModel
 import com.example.lohasfarm.logic.network.repository.FarmPageRepository
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.utils.StateCode
@@ -32,6 +34,10 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
     val landInfoState: LiveData<List<LandInfoModel>>
         get() = _landInfoState
 
+    private val _plantIntroInfoState = MutableLiveData<List<PlantIntroModel>>(LfState.plantInfo)
+    val plantIntroInfoState: LiveData<List<PlantIntroModel>>
+        get() = _plantIntroInfoState
+
     var index = 0
 
     fun updateLandInfo() {
@@ -55,8 +61,35 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
                     farmInfoModel.msg
                 )
             }
+
         }
     }
+
+    fun updatePlantIntroInfo() {
+        viewModelScope.launch {
+            val plantInfoModel = farmPageRepository.getPlantIntroData(LfState.uuid)
+            Log.i(TAG, plantInfoModel.code.toString())
+            Log.i(TAG, plantInfoModel.msg)
+            Log.i(TAG, plantInfoModel.content.size.toString())
+
+            if (plantInfoModel.code == StateCode.FetPlantIntroSuccess.code) {
+                _plantIntroInfoState.value = plantInfoModel.content
+                // 本地缓存土地数据
+                LfState.savePlantInfo(plantInfoModel.content)
+            }
+
+            withContext(Dispatchers.Main) {
+                Log.i(TAG, "!!!!!!")
+                showToast(
+                    getApplication(),
+                    plantInfoModel.msg
+                )
+            }
+
+        }
+    }
+
+
 
 
 }

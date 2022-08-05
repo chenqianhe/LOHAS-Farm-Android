@@ -1,11 +1,10 @@
 package com.example.lohasfarm.logic.utils
 
-import com.example.lohasfarm.logic.database.FarmInfo
-import com.example.lohasfarm.logic.database.FarmInfoDao
-import com.example.lohasfarm.logic.database.FarmInfoDatabase
+import com.example.lohasfarm.logic.database.*
 import com.example.lohasfarm.logic.network.model.BaseModel
 import com.example.lohasfarm.logic.network.model.LandInfoModel
 import com.example.lohasfarm.logic.network.model.LoginModel
+import com.example.lohasfarm.logic.network.model.PlantIntroModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -25,15 +24,19 @@ object LfState {
     private const val LAND_NAME = "landName"
     private lateinit var dataStore: DataStoreUtils
     private lateinit var landInfoModelDao: FarmInfoDao
+    private lateinit var plantIntroInfoModelDao: PlantIntroInfoDao
     var landInfo: MutableList<LandInfoModel> = mutableListOf()
+    var plantInfo: MutableList<PlantIntroModel> = mutableListOf()
 
     /**
      * 初始化
      */
-    fun initialize(dataStoreUtils: DataStoreUtils, farmInfoDb: FarmInfoDao) {
+    fun initialize(dataStoreUtils: DataStoreUtils, farmInfoDb: FarmInfoDao, plantIntroInfoDb: PlantIntroInfoDao) {
         dataStore = dataStoreUtils
         landInfoModelDao = farmInfoDb
+        plantIntroInfoModelDao = plantIntroInfoDb
         val farmInfo = landInfoModelDao.queryAll()
+        val plantIntroInfo = plantIntroInfoModelDao.queryAll()
         // 加载本地数据
         if (this.isLogin) {
             farmInfo.forEach {
@@ -45,6 +48,21 @@ object LfState {
                     is_mine = it.isMine)
                 )
             }
+
+            plantIntroInfo.forEach {
+                plantInfo.add(
+                    PlantIntroModel(
+                        land_uid = it.land_uid,
+                        goods_uid = it.goods_uid,
+                        goods_name = it.goods_name,
+                        plant_state = it.plant_state,
+                        plant_root_url = it.plant_root_url,
+                        plant_day = it.plant_day,
+                        plant_total_day = it.plant_total_day
+                    )
+                )
+            }
+
         }
     }
 
@@ -138,6 +156,27 @@ object LfState {
                 farmInfo.landProfilePhoto = it.land_profile_photo
                 farmInfo.isMine = it.is_mine
                 landInfoModelDao.insert(farmInfo)
+            }
+        }
+    }
+
+    /**
+     * 存储作物信息
+     */
+    @OptIn(DelicateCoroutinesApi::class)
+    fun savePlantInfo(plantInfo: List<PlantIntroModel>) {
+        GlobalScope.launch(Dispatchers.IO){
+            plantIntroInfoModelDao.deleteAll()
+            val plantIntroInfo = PlantIntroInfo()
+            plantInfo.forEach {
+                plantIntroInfo.land_uid = it.land_uid
+                plantIntroInfo.goods_uid = it.goods_uid
+                plantIntroInfo.goods_name = it.goods_name
+                plantIntroInfo.plant_root_url = it.plant_root_url
+                plantIntroInfo.plant_state = it.plant_state
+                plantIntroInfo.plant_day = it.plant_day
+                plantIntroInfo.plant_total_day = it.plant_total_day
+                plantIntroInfoModelDao.insert(plantIntroInfo)
             }
         }
     }

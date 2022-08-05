@@ -26,4 +26,9 @@ object LfNetwork {
      */
     suspend fun getLandInfo(userUuid: String) = farmPageService.getLandInfo(userUuid)
 
+    /**
+     * 获取作物信息
+     */
+    suspend fun getPlantIntroInfo(userUuid: String) = farmPageService.getPlantIntroInfo(userUuid)
+
 }

@@ -75,6 +75,7 @@ fun MainPage(actions: Actions) {
                 when (screen) {
                     Tabs.FARM_PAGE -> {
                         farmPageViewModel.updateLandInfo()
+                        farmPageViewModel.updatePlantIntroInfo()
                         FarmPage(actions, farmPageViewModel)
                     }
                     Tabs.ACTIVITY_PAGE -> ActivityPage()

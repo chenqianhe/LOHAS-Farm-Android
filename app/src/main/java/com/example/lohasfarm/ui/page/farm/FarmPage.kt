@@ -5,6 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -39,6 +41,7 @@ private const val TAG = "FARM_PAGE"
 fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
 
     val landInfo by farmPageViewModel.landInfoState.observeAsState()
+    val plantIntroInfo by farmPageViewModel.plantIntroInfoState.observeAsState()
     val paddings: Array<Array<Double>> = arrayOf(
         arrayOf(37.44, 119.6), arrayOf(167.44, 119.6), arrayOf(298.48, 119.6),
         arrayOf(37.44, 242.32), arrayOf(163.28, 225.68), arrayOf(298.48, 242.32),
@@ -47,6 +50,7 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
     val landName = remember {
         mutableStateOf(LfState.landName)
     }
+    Log.i(TAG, plantIntroInfo!!.size.toString())
 
     Scaffold(
         backgroundColor = LOHASFarmTheme.colors.background){ innerPadding ->
@@ -91,7 +95,9 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                 }
             }
             Column(
-                modifier = modifier.fillMaxWidth().padding(0.dp),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(0.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = landName.value + "的农场",
@@ -101,8 +107,18 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                     modifier = Modifier
                         .padding(20.8.dp, 16.64.dp, 0.dp, 12.48.dp)
                         .height(22.88.dp))
-                PlantCard("小番茄", "https://7072-prod-0gem4gzhcdae3027-1311785555.tcb.qcloud.la/plant/%E5%B0%8F%E7%95%AA%E8%8C%84.png?sign=18b0bf7d33cc9112ed9d293721c4b79b&t=1659622032",
-                    "发芽", 30, 60)
+
+                LazyRow(modifier = Modifier.fillMaxWidth().padding(20.8.dp, 0.dp)) {
+                    items(items =  plantIntroInfo!!, key = {data -> data.goods_uid}) { data ->
+                        PlantCard(
+                            data.goods_name,
+                            data.plant_root_url,
+                            data.plant_state,
+                            data.plant_day,
+                            data.plant_total_day)
+                    }
+                }
+
             }
 
 
@@ -211,7 +227,8 @@ fun LandSign(name: String?, url: String, modifier: Modifier = Modifier, isLarge:
 @Composable
 fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int) {
     Column(modifier = Modifier
-        .padding(0.dp)
+        .padding(0.dp, 0.dp, 16.64.dp, 0.dp)
+        .shadow(8.32.dp)
         .width(128.96.dp)
         .height(197.6.dp)
         .background(LOHASFarmTheme.colors.white),
@@ -256,7 +273,11 @@ fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int)
 
             Box(modifier = Modifier
                 .padding(0.dp)
-                .width((104 * day / totalDay).dp)
+                .width(if (totalDay > 0) {
+                    (104 * day / totalDay).dp
+                } else {
+                    0.dp
+                })
                 .height(4.16.dp)
                 .background(
                     Brush.linearGradient(

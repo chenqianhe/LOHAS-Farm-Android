@@ -5,4 +5,6 @@ import com.example.lohasfarm.logic.network.LfNetwork
 class FarmPageRepository {
     suspend fun getLandData(userUuid: String) = LfNetwork.getLandInfo(userUuid)
 
+    suspend fun getPlantIntroData(userUuid: String) = LfNetwork.getPlantIntroInfo(userUuid)
+
 }
