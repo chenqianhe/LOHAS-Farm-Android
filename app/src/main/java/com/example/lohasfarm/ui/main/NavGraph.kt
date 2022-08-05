@@ -6,14 +6,12 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavGraphBuilder
+import androidx.navigation.*
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Destinations
 import com.example.lohasfarm.ui.page.LoginPage
+import com.example.lohasfarm.ui.page.WebPage
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -41,6 +39,13 @@ fun NavGraph(
 
         composableHorizontal(Destinations.LOGIN_ROUTE) {
             LoginPage(actions = actions)
+        }
+
+        composableHorizontal("${Destinations.WEB_PAGE_ROUTE}/{url}",
+            arguments = listOf(navArgument("url") {type = NavType.StringType})) {
+                val argument = requireNotNull(it.arguments)
+                val url = argument.getString("url")
+                WebPage(actions = actions, url = url!!)
         }
     }
 }

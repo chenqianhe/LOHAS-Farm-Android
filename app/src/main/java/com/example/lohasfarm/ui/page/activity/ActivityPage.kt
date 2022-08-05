@@ -1,5 +1,7 @@
 package com.example.lohasfarm.ui.page.activity
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.lohasfarm.logic.viewModel.ActivityPageViewModel
@@ -26,7 +28,7 @@ import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
 
 @Composable
-fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel) {
+fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel, bottomPadding: Dp) {
     val activityItemState by activityPageViewModel.activityItemState.observeAsState()
     val foodActivityState by activityPageViewModel.foodActivityInfoState.observeAsState()
     val farmActivityState by activityPageViewModel.farmActivityInfoState.observeAsState()
@@ -96,7 +98,9 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel)
     }) { innerPadding ->
         val modifier = Modifier.padding(innerPadding)
 
-        LazyColumn(modifier = Modifier.fillMaxWidth().padding(20.8.dp, 0.dp)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.8.dp, 0.dp, 20.8.dp, bottomPadding)) {
             items(items =
             if (activityItemState!!) {
                 foodActivityState!!
@@ -106,7 +110,8 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel)
                 ActivityItem(title = data.activity_title,
                     url = data.activity_photo_url,
                     date = data.activity_date,
-                    finalUrl = data.activity_final_url)
+                    finalUrl = data.activity_final_url,
+                    actions = actions)
             }
         }
     }
@@ -114,11 +119,14 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel)
 
 
 @Composable
-fun ActivityItem(title: String, url: String, date: String, finalUrl: String) {
+fun ActivityItem(title: String, url: String, date: String, finalUrl: String, actions: Actions) {
     Row(modifier = Modifier
         .padding(0.dp, 8.32.dp)
         .height(83.2.dp)
-        .width(348.4.dp),
+        .width(348.4.dp)
+        .clickable {
+            actions.toWebPage(finalUrl.replace("https://", ""))
+        },
     horizontalArrangement = Arrangement.SpaceAround) {
         Image(modifier = Modifier
             .padding(0.dp)

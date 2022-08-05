@@ -83,7 +83,7 @@ fun MainPage(actions: Actions) {
                     Tabs.ACTIVITY_PAGE -> {
                         activityModel.getFoodActivityInfo()
                         activityModel.getFarmActivityInfo()
-                        ActivityPage(actions, activityModel)
+                        ActivityPage(actions, activityModel, innerPadding.calculateBottomPadding())
                     }
                     Tabs.MESSAGE_PAGE -> MessagePage()
                     Tabs.MINE_PAGE -> MinePage()

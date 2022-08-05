@@ -12,6 +12,10 @@ class Actions(navController: NavHostController) {
         navController.navigate(Destinations.LOGIN_ROUTE)
     }
 
+    val toWebPage: (url: String) -> Unit = {
+        navController.navigate("${Destinations.WEB_PAGE_ROUTE}/${it}")
+    }
+
     val upPress: () -> Unit = {
         navController.navigateUp()
     }
