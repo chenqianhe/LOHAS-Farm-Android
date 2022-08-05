@@ -80,7 +80,11 @@ fun MainPage(actions: Actions) {
                         farmPageViewModel.updatePlantIntroInfo()
                         FarmPage(actions, farmPageViewModel)
                     }
-                    Tabs.ACTIVITY_PAGE -> ActivityPage(actions, activityModel)
+                    Tabs.ACTIVITY_PAGE -> {
+                        activityModel.getFoodActivityInfo()
+                        activityModel.getFarmActivityInfo()
+                        ActivityPage(actions, activityModel)
+                    }
                     Tabs.MESSAGE_PAGE -> MessagePage()
                     Tabs.MINE_PAGE -> MinePage()
                     else -> {

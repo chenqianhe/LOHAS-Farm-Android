@@ -5,7 +5,11 @@ enum class StateCode(val code: Int) {
     LoginInfoError(101),
     GetLandInfoSuccess(300),
     GetLandInfoError(301),
-    FetPlantIntroSuccess(400),
-    FetPlantIntroError(401),
+    GetPlantIntroSuccess(400),
+    GetPlantIntroError(401),
+    GetFoodActivityInfoSuccess(500),
+    GetFoodActivityInfoError(501),
+    GetFarmActivityInfoSuccess(600),
+    GetFarmActivityInfoError(601),
 
 }

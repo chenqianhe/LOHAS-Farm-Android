@@ -73,7 +73,7 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
             Log.i(TAG, plantInfoModel.msg)
             Log.i(TAG, plantInfoModel.content.size.toString())
 
-            if (plantInfoModel.code == StateCode.FetPlantIntroSuccess.code) {
+            if (plantInfoModel.code == StateCode.GetPlantIntroSuccess.code) {
                 _plantIntroInfoState.value = plantInfoModel.content
                 // 本地缓存土地数据
                 LfState.savePlantInfo(plantInfoModel.content)
