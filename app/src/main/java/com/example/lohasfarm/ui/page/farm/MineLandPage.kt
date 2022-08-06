@@ -1,11 +1,11 @@
 package com.example.lohasfarm.ui.page.farm
 
-import android.view.RoundedCorner
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -39,9 +41,12 @@ fun MineLandPage(actions: Actions,
                  landLeaseTerm: String) {
     val viewModel: MineLandPageViewModel = hiltViewModel()
     viewModel.getPlantData()
+    viewModel.getPlantAddableData()
     val isFinished by viewModel.finished.observeAsState(false)
     val addingState by viewModel.addState.observeAsState(false)
     val plantInfoState by viewModel.plantInfoState.observeAsState()
+    val plantAddableInfoState by viewModel.plantAddableInfoState.observeAsState()
+    val plantAddedNumState by viewModel.plantAddedInfoState.observeAsState()
 
     Scaffold(modifier = Modifier
         .systemBarsPadding()
@@ -56,7 +61,15 @@ fun MineLandPage(actions: Actions,
                     Column(modifier = Modifier
                         .padding(75.dp, 0.dp)
                         .fillMaxHeight()
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            if (addingState) {
+                                viewModel.disableAdd()
+                            }
+                        },
                         horizontalAlignment = Alignment.Start,
                         verticalArrangement = Arrangement.Center) {
                         Text(modifier = Modifier
@@ -83,7 +96,16 @@ fun MineLandPage(actions: Actions,
         val modifier = Modifier.padding(innerPadding)
 
         Box(modifier = Modifier.padding(0.dp)) {
-            Column(modifier = Modifier.padding(0.dp),
+            Column(modifier = Modifier
+                .padding(0.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    if (addingState) {
+                        viewModel.disableAdd()
+                    }
+                },
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
                 Row(modifier = Modifier
@@ -120,7 +142,15 @@ fun MineLandPage(actions: Actions,
                         .fillMaxWidth()
                     ) {
                         Image(modifier = Modifier
-                            .size(68.dp),
+                            .size(68.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                if (!addingState) {
+                                    viewModel.enableAdd()
+                                }
+                            },
                             painter = painterResource(id = R.drawable.ic_add),
                             contentDescription = null,
                             contentScale = ContentScale.Fit)
@@ -192,7 +222,11 @@ fun MineLandPage(actions: Actions,
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
                             ) {
-                                actions.toMineLandInfo(name, landLeaseTerm, "已种${landPlantedArea}㎡ \\ 剩余${landTotalArea-landPlantedArea}㎡")
+                                actions.toMineLandInfo(
+                                    name,
+                                    landLeaseTerm,
+                                    "已种${landPlantedArea}㎡ \\ 剩余${landTotalArea - landPlantedArea}㎡"
+                                )
                             }) {
                             Image(modifier = Modifier
                                 .padding(0.dp)
@@ -202,6 +236,161 @@ fun MineLandPage(actions: Actions,
                                 contentScale = ContentScale.Fit)
                             Text(text = "我的地块", color = LOHASFarmTheme.colors.body1, style = MaterialTheme.typography.body2)
                         }
+                    }
+                }
+            }
+
+            if (addingState) {
+                Column(
+                    modifier = Modifier
+                        .padding(0.dp, 42.64.dp, 0.dp, 0.dp)
+                        .shadow(4.16.dp, RoundedCornerShape(16.64.dp, 16.64.dp, 0.dp, 0.dp))
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .background(LOHASFarmTheme.colors.white)
+                ) {
+                    Text(modifier = Modifier.padding(20.8.dp, 20.8.dp, 0.dp, 10.4.dp),
+                        text = "添加作物",
+                        color = LOHASFarmTheme.colors.navBar,
+                        style = MaterialTheme.typography.h5)
+
+                    LazyColumn(modifier = Modifier
+                        .padding(0.dp)
+                        .fillMaxWidth()
+                        .height(525.dp)
+                        .padding(20.8.dp, 0.dp))  {
+                            items(items =  plantAddableInfoState!!, key = {data -> data.plantInfo_uid}) { data ->
+                                Row(modifier = Modifier
+                                    .padding(0.dp, 10.4.dp)
+                                    .fillMaxWidth()
+                                    .height(83.2.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically) {
+
+                                    Row(modifier = Modifier
+                                        .padding(0.dp)
+                                        .fillMaxHeight()) {
+                                        Image(modifier = Modifier
+                                            .size(83.2.dp)
+                                            .shadow(0.dp, RoundedCornerShape(8.32.dp), clip = true),
+                                            painter = rememberAsyncImagePainter(model = data.plantInfo_photo_url),
+                                            contentDescription = null,
+                                            contentScale = ContentScale.Fit
+                                        )
+
+                                        Column(modifier = Modifier
+                                            .padding(12.48.dp, 0.dp, 0.dp, 0.dp)
+                                            .fillMaxHeight(),
+                                            horizontalAlignment = Alignment.Start,
+                                            verticalArrangement = Arrangement.SpaceBetween) {
+                                            Text(modifier = Modifier
+                                                .padding(0.dp)
+                                                .height(22.88.dp),
+                                                text = data.plantInfo_name,
+                                                color = LOHASFarmTheme.colors.headline,
+                                                style = MaterialTheme.typography.h5)
+
+                                            Column(modifier = Modifier
+                                                .padding(0.dp)
+                                                .height(43.68.dp),
+                                                horizontalAlignment = Alignment.Start,
+                                                verticalArrangement = Arrangement.SpaceBetween) {
+                                                Text(text = "生长期：${data.plantInfo_total_day}",
+                                                    color = LOHASFarmTheme.colors.footnote,
+                                                    style = MaterialTheme.typography.body1)
+
+                                                Text(text = "品种：${data.plantInfo_type}",
+                                                    color = LOHASFarmTheme.colors.footnote,
+                                                    style = MaterialTheme.typography.body1)
+                                            }
+                                        }
+                                    }
+
+                                    Column(modifier = Modifier
+                                        .padding(0.dp)
+                                        .fillMaxHeight(),
+                                    horizontalAlignment = Alignment.End,
+                                    verticalArrangement = Arrangement.Bottom) {
+                                        Row(modifier = Modifier
+                                            .padding(0.dp)
+                                            .width(104.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = if (plantAddedNumState!![data.plantInfo_uid]!! > 0) {
+                                            Arrangement.SpaceBetween
+                                        } else {
+                                            Arrangement.End
+                                        }) {
+                                            if (plantAddedNumState!![data.plantInfo_uid]!! > 0) {
+                                                Image(painter = painterResource(id = R.drawable.ic_mius),
+                                                    contentDescription = null,
+                                                    modifier = Modifier.clickable(
+                                                        interactionSource = remember { MutableInteractionSource() },
+                                                        indication = null
+                                                    ) {
+                                                        viewModel.changePlantNum(data.plantInfo_uid, 0)
+                                                    })
+
+                                                Text(text = "${plantAddedNumState!![data.plantInfo_uid]}㎡",
+                                                    color = LOHASFarmTheme.colors.body1,
+                                                    style = MaterialTheme.typography.body1)
+                                            }
+
+                                            Image(painter = painterResource(id = R.drawable.ic_add_rec),
+                                                contentDescription = null,
+                                                modifier = Modifier.clickable(
+                                                    interactionSource = remember { MutableInteractionSource() },
+                                                    indication = null
+                                                ) {
+                                                    viewModel.changePlantNum(data.plantInfo_uid, 1)
+                                                })
+                                        }
+                                    }
+
+
+                                }
+                            }
+                    }
+
+                    Row(modifier = Modifier
+                        .padding(23.4.dp, 20.8.dp, 23.4.dp, 0.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
+                        Button(modifier = Modifier
+                            .padding(0.dp)
+                            .height(41.6.dp),
+                            elevation = ButtonDefaults.elevation(0.dp),
+                            colors = ButtonDefaults.buttonColors(LOHASFarmTheme.colors.white),
+                            shape = RoundedCornerShape(20.8.dp),
+                            border = BorderStroke(1.04.dp, LOHASFarmTheme.colors.color),
+                            contentPadding = PaddingValues(0.dp),
+                            onClick = { viewModel.clearAll() }) {
+                            Text(modifier = Modifier.padding(0.dp, 8.5.dp)
+                                .fillMaxHeight()
+                                .width(124.8.dp),
+                                text = "重置",
+                                color = LOHASFarmTheme.colors.color,
+                                style = MaterialTheme.typography.button,
+                                textAlign = TextAlign.Center)
+                        }
+
+                        Button(modifier = Modifier
+                            .padding(0.dp)
+                            .height(41.6.dp),
+                            elevation = ButtonDefaults.elevation(0.dp),
+                            colors = ButtonDefaults.buttonColors(LOHASFarmTheme.colors.color),
+                            shape = RoundedCornerShape(20.8.dp),
+                            contentPadding = PaddingValues(0.dp),
+                            onClick = { viewModel.uploadAddedPlant() }) {
+                            Text(modifier = Modifier.padding(0.dp, 8.5.dp)
+                                .fillMaxHeight()
+                                .width(197.6.dp),
+                                text = "确认添加",
+                                color = LOHASFarmTheme.colors.white,
+                                style = MaterialTheme.typography.button,
+                                textAlign = TextAlign.Center)
+                        }
+
                     }
                 }
             }

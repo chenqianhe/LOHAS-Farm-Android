@@ -31,6 +31,11 @@ object LfNetwork {
     private val minePageService = ServiceCreator.create(MinePageService::class.java, IS_TEST_ENV)
 
     /**
+     * 我的农场相关服务
+     */
+    private val mineFarmPageService = ServiceCreator.create(MineFarmPageService::class.java, IS_TEST_ENV)
+
+    /**
      * 登陆
      */
     suspend fun login(account: String, password: String) = loginService.login(account, password)
@@ -77,4 +82,14 @@ object LfNetwork {
      */
     suspend fun getUserInfo(userUuid: String) = minePageService.getUserInfo(userUuid)
 
+    /**
+     * 获取可添加作物
+     */
+    suspend fun getPlantAddable(userUuid: String) = mineFarmPageService.getPlantAddableInfo(userUuid)
+
+    /**
+     * 上报作物修改
+     */
+    suspend fun uploadPlantChange(userUuid: String, changeInfo: String) =
+        mineFarmPageService.uploadPlantChange(userUuid, changeInfo)
 }
