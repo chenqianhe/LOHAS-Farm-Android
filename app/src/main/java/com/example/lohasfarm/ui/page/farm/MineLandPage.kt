@@ -17,8 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -178,7 +176,15 @@ fun MineLandPage(actions: Actions,
                         Column(modifier = Modifier
                             .padding(0.dp)
                             .fillMaxHeight()
-                            .width(49.92.dp)) {
+                            .width(49.92.dp).clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                actions.toWebPage(
+                                    "https://m.baidu.com".replace("/", "斜杠"),
+                                    "农事预约"
+                                )
+                            }) {
                             Image(modifier = Modifier
                                 .padding(0.dp)
                                 .size(49.92.dp),

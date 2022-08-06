@@ -1,4 +1,4 @@
-package com.example.lohasfarm.ui.page.activity
+package com.example.lohasfarm.ui.page
 
 import android.annotation.SuppressLint
 import android.webkit.WebView
@@ -62,7 +62,7 @@ fun WebPage(actions: Actions, url: String, title: String) {
                 webView.settings.loadsImagesAutomatically = true
                 webView.settings.mediaPlaybackRequiresUserGesture = false
                 webView.webViewClient = WebViewClient()
-                webView.loadUrl("https://$url")
+                webView.loadUrl(url.replace("斜杠", "/"))
                 webView
             })
     }

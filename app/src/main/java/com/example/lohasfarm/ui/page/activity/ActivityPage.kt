@@ -110,7 +110,7 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel,
                     url = data.activity_photo_url,
                     date = data.activity_date,
                     modifier = Modifier.clickable {
-                        actions.toWebPage(data.activity_final_url.replace("https://", ""),
+                        actions.toWebPage(data.activity_final_url.replace("/", "斜杠"),
                             if (activityItemState!!) {
                                 "农副食品"
                             } else {

@@ -12,7 +12,7 @@ import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Destinations
 import com.example.lohasfarm.ui.page.message.DetailMessagePage
 import com.example.lohasfarm.ui.page.LoginPage
-import com.example.lohasfarm.ui.page.activity.WebPage
+import com.example.lohasfarm.ui.page.WebPage
 import com.example.lohasfarm.ui.page.farm.LandInfoPage
 import com.example.lohasfarm.ui.page.farm.MineLandPage
 import com.example.lohasfarm.ui.page.farm.OthersLandDetail
