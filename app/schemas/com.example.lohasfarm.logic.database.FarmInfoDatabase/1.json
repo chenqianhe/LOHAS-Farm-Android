@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ae452bfbcae0221c8cb94a128ceff1f6",
+    "identityHash": "781b68a569ebdb60c1afda30e224730e",
     "entities": [
       {
         "tableName": "FarmInfo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`land_uid` TEXT NOT NULL, `land_name` TEXT NOT NULL, `land_profile_photo` TEXT NOT NULL, `is_mine` INTEGER NOT NULL, `land_planted_area` INTEGER NOT NULL, `land_total_area` INTEGER NOT NULL, `land_soil_type` TEXT NOT NULL, `land_lease_term` INTEGER NOT NULL, PRIMARY KEY(`land_uid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`land_uid` TEXT NOT NULL, `land_name` TEXT NOT NULL, `land_profile_photo` TEXT NOT NULL, `is_mine` INTEGER NOT NULL, `land_planted_area` INTEGER NOT NULL, `land_total_area` INTEGER NOT NULL, `land_soil_type` TEXT NOT NULL, `land_lease_term` TEXT NOT NULL, PRIMARY KEY(`land_uid`))",
         "fields": [
           {
             "fieldPath": "landUid",
@@ -53,7 +53,7 @@
           {
             "fieldPath": "landLeaseTerm",
             "columnName": "land_lease_term",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -70,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ae452bfbcae0221c8cb94a128ceff1f6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '781b68a569ebdb60c1afda30e224730e')"
     ]
   }
 }

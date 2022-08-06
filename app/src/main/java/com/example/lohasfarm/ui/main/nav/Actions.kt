@@ -37,10 +37,16 @@ class Actions(navController: NavHostController) {
             .navigate("${Destinations.OTHERS_LAND_ROUTE}/${uid}/${name}/${landPlantedArea}/${landTotalArea}/${profile_photo_url}")
     }
 
-    val toMineLandDetail: (uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String) -> Unit
-            = { uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String ->
+    val toMineLandDetail: (uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String, landLeaseTerm: String) -> Unit
+            = { uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String, landLeaseTerm: String ->
         navController
-            .navigate("${Destinations.MINE_LAND_ROUTE}/${uid}/${name}/${landPlantedArea}/${landTotalArea}/${profile_photo_url}")
+            .navigate("${Destinations.MINE_LAND_ROUTE}/${uid}/${name}/${landPlantedArea}/${landTotalArea}/${profile_photo_url}/${landLeaseTerm}")
+    }
+
+    val toMineLandInfo: ( name: String, landLeaseTerm: String, area: String) -> Unit
+            = {  name: String, landLeaseTerm: String, area: String ->
+        navController
+            .navigate("${Destinations.MINE_LAND_INFO_ROUTE}/${name}/${landLeaseTerm}/${area}")
     }
 
     /**

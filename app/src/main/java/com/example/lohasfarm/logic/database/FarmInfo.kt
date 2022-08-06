@@ -30,7 +30,7 @@ class FarmInfo {
     var landSoilType: String = "黑土地"
 
     @ColumnInfo(name = "land_lease_term")
-    var landLeaseTerm: Int = 0
+    var landLeaseTerm: String = ""
 
 }
 

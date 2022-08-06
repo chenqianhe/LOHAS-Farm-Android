@@ -3,6 +3,8 @@ package com.example.lohasfarm.ui.page.farm
 import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,10 +13,10 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +35,8 @@ fun MineLandPage(actions: Actions,
                  name: String,
                  landPlantedArea: Int,
                  landTotalArea: Int,
-                 profilePhotoUrl: String) {
+                 profilePhotoUrl: String,
+                 landLeaseTerm: String) {
     val viewModel: MineLandPageViewModel = hiltViewModel()
     viewModel.getPlantData()
     val isFinished by viewModel.finished.observeAsState(false)
@@ -184,7 +187,13 @@ fun MineLandPage(actions: Actions,
                         Column(modifier = Modifier
                             .padding(0.dp)
                             .fillMaxHeight()
-                            .width(49.92.dp)) {
+                            .width(49.92.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                actions.toMineLandInfo(name, landLeaseTerm, "已种${landPlantedArea}㎡ \\ 剩余${landTotalArea-landPlantedArea}㎡")
+                            }) {
                             Image(modifier = Modifier
                                 .padding(0.dp)
                                 .size(49.92.dp),

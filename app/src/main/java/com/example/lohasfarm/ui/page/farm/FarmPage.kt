@@ -82,7 +82,7 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null
                                 ) {
-                                    actions.toMineLandDetail(it.land_uid, it.land_name, it.land_planted_area, it.land_total_area, it.land_profile_photo.replace("/", "斜杠"))
+                                    actions.toMineLandDetail(it.land_uid, it.land_name, it.land_planted_area, it.land_total_area, it.land_profile_photo.replace("/", "斜杠"), it.land_lease_term)
                                 },
                             isLarge = true)
                         landName.value = it.land_name
