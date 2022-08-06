@@ -46,6 +46,12 @@ object LfNetwork {
     suspend fun getPlantIntroInfo(userUuid: String) = farmPageService.getPlantIntroInfo(userUuid)
 
     /**
+     * 获取其他土地作物信息
+     */
+    suspend fun getOthersPlantIntroInfo(userUuid: String, landUid: String) =
+        farmPageService.getOthersPlantIntroInfo(userUuid, landUid)
+
+    /**
      * 获取农副食品信息
      */
     suspend fun getFoodActivityInfo(userUuid: String) = activityPageService.getFoodActivityInfo(userUuid)

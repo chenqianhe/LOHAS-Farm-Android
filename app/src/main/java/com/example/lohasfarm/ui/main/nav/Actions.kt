@@ -29,7 +29,12 @@ class Actions(navController: NavHostController) {
             = { uid: String, ugid: String, name: String, profile_photo_url: String ->
         navController
             .navigate("${Destinations.PERSONAL_INFO_ROUTE}/${uid}/${ugid}/${name}/${profile_photo_url}")
+    }
 
+    val toOthersLandDetail: (uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String) -> Unit
+            = { uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String ->
+        navController
+            .navigate("${Destinations.OTHERS_LAND_ROUTE}/${uid}/${name}/${landPlantedArea}/${landTotalArea}/${profile_photo_url}")
     }
 
     /**

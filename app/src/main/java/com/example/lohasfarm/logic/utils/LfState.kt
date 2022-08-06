@@ -9,7 +9,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Scope
 
 
 /**
@@ -45,7 +44,11 @@ object LfState {
                     land_uid = it.landUid,
                     land_name = it.landName,
                     land_profile_photo = it.landProfilePhoto,
-                    is_mine = it.isMine)
+                    is_mine = it.isMine,
+                    land_planted_area = it.landPlantedArea,
+                    land_total_area = it.landTotalArea,
+                    land_soil_type = it.landSoilType,
+                    land_lease_term = it.landLeaseTerm)
                 )
             }
 
@@ -155,6 +158,10 @@ object LfState {
                 farmInfo.landName = it.land_name
                 farmInfo.landProfilePhoto = it.land_profile_photo
                 farmInfo.isMine = it.is_mine
+                farmInfo.landPlantedArea = it.land_planted_area
+                farmInfo.landTotalArea = it.land_total_area
+                farmInfo.landSoilType = it.land_soil_type
+                farmInfo.landLeaseTerm = it.land_lease_term
                 landInfoModelDao.insert(farmInfo)
             }
         }

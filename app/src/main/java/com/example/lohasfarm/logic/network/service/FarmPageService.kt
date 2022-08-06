@@ -5,6 +5,7 @@ import com.example.lohasfarm.logic.network.model.LandInfoModel
 import com.example.lohasfarm.logic.network.model.PlantIntroModel
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Query
 
 
 interface FarmPageService {
@@ -18,4 +19,9 @@ interface FarmPageService {
         @Header("X-WX-OPENID") uuid: String,
     ): BaseModel<List<PlantIntroModel>>
 
+    @GET("plant/others")
+    suspend fun getOthersPlantIntroInfo(
+        @Header("X-WX-OPENID") uuid: String,
+        @Query("land_uid") landUid: String
+    ): BaseModel<List<PlantIntroModel>>
 }

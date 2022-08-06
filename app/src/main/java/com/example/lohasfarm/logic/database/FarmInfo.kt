@@ -17,8 +17,20 @@ class FarmInfo {
     @ColumnInfo(name = "land_profile_photo")
     var landProfilePhoto: String = "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0"
 
-    @ColumnInfo(name = "mine")
+    @ColumnInfo(name = "is_mine")
     var isMine: Boolean = false
+
+    @ColumnInfo(name = "land_planted_area")
+    var landPlantedArea: Int = 0
+
+    @ColumnInfo(name = "land_total_area")
+    var landTotalArea: Int = Int.MAX_VALUE
+
+    @ColumnInfo(name = "land_soil_type")
+    var landSoilType: String = "黑土地"
+
+    @ColumnInfo(name = "land_lease_term")
+    var landLeaseTerm: Int = 0
 
 }
 

@@ -81,7 +81,6 @@ class FarmPageViewModel(application: Application): AndroidViewModel(application)
 
             if (TOAST_TEST) {
                 withContext(Dispatchers.Main) {
-                    Log.i(TAG, "!!!!!!")
                     showToast(
                         getApplication(),
                         plantInfoModel.msg

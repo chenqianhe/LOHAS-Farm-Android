@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -82,7 +84,13 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                     } else {
                         LandSign(name = it.land_name,
                             url = it.land_profile_photo,
-                            modifier = Modifier.padding(paddings[farmPageViewModel.index][0].dp, paddings[farmPageViewModel.index][1].dp, 0.dp, 0.dp))
+                            modifier = Modifier.padding(paddings[farmPageViewModel.index][0].dp, paddings[farmPageViewModel.index][1].dp, 0.dp, 0.dp)
+                                .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                actions.toOthersLandDetail(it.land_uid, it.land_name, it.land_planted_area, it.land_total_area, it.land_profile_photo.replace("/", "斜杠"))
+                            })
 
                         // 第5个是个人的放大后padding
                         farmPageViewModel.index = if (farmPageViewModel.index > 7) {

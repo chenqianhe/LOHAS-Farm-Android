@@ -7,4 +7,7 @@ class FarmPageRepository {
 
     suspend fun getPlantIntroData(userUuid: String) = LfNetwork.getPlantIntroInfo(userUuid)
 
+    suspend fun getOthersPlantData(userUuid: String, landUid: String) =
+        LfNetwork.getOthersPlantIntroInfo(userUuid, landUid)
+
 }
