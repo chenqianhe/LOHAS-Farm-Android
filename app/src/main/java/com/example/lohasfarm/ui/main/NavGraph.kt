@@ -13,6 +13,7 @@ import com.example.lohasfarm.ui.main.nav.Destinations
 import com.example.lohasfarm.ui.page.message.DetailMessagePage
 import com.example.lohasfarm.ui.page.LoginPage
 import com.example.lohasfarm.ui.page.activity.WebPage
+import com.example.lohasfarm.ui.page.farm.MineLandPage
 import com.example.lohasfarm.ui.page.farm.OthersLandDetail
 import com.example.lohasfarm.ui.page.mine.PersonalInfoPage
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -94,6 +95,23 @@ fun NavGraph(
             val landTotalArea = argument.getInt("landTotalArea")
             val profilePhotoUrl = argument.getString("profile_photo_url")
             OthersLandDetail(actions, uid!!, name!!, landPlantedArea, landTotalArea, profilePhotoUrl!!)
+        }
+
+        composableHorizontal("${Destinations.MINE_LAND_ROUTE}/{uid}/{name}/{landPlantedArea}/{landTotalArea}/{profile_photo_url}",
+            arguments = listOf(
+                navArgument("uid") {type = NavType.StringType},
+                navArgument("name") {type = NavType.StringType},
+                navArgument("landPlantedArea") {type = NavType.IntType},
+                navArgument("landTotalArea") {type = NavType.IntType},
+                navArgument("profile_photo_url") {type = NavType.StringType}
+            )) {
+            val argument = requireNotNull(it.arguments)
+            val uid = argument.getString("uid")
+            val name = argument.getString("name")
+            val landPlantedArea = argument.getInt("landPlantedArea")
+            val landTotalArea = argument.getInt("landTotalArea")
+            val profilePhotoUrl = argument.getString("profile_photo_url")
+            MineLandPage(actions, uid!!, name!!, landPlantedArea, landTotalArea, profilePhotoUrl!!)
         }
     }
 }

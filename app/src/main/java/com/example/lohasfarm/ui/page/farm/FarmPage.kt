@@ -77,7 +77,13 @@ fun FarmPage(actions: Actions, farmPageViewModel: FarmPageViewModel) {
                         LandSign(
                             name = it.land_name,
                             url = it.land_profile_photo,
-                            modifier = Modifier.padding(paddings[4][0].dp, paddings[4][1].dp, 0.dp, 0.dp),
+                            modifier = Modifier.padding(paddings[4][0].dp, paddings[4][1].dp, 0.dp, 0.dp)
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null
+                                ) {
+                                    actions.toMineLandDetail(it.land_uid, it.land_name, it.land_planted_area, it.land_total_area, it.land_profile_photo.replace("/", "斜杠"))
+                                },
                             isLarge = true)
                         landName.value = it.land_name
                         LfState.landName = it.land_name

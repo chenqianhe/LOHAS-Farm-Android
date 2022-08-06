@@ -11,5 +11,6 @@ object Destinations {
     const val DETAIL_MESSAGE_ROUTE = "detail_message_route"
     const val PERSONAL_INFO_ROUTE = "personal_info_route"
     const val OTHERS_LAND_ROUTE = "others_land_route"
+    const val MINE_LAND_ROUTE = "mine_land_route"
 
 }

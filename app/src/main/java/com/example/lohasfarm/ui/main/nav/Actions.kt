@@ -37,6 +37,12 @@ class Actions(navController: NavHostController) {
             .navigate("${Destinations.OTHERS_LAND_ROUTE}/${uid}/${name}/${landPlantedArea}/${landTotalArea}/${profile_photo_url}")
     }
 
+    val toMineLandDetail: (uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String) -> Unit
+            = { uid: String, name: String, landPlantedArea: Int, landTotalArea: Int, profile_photo_url: String ->
+        navController
+            .navigate("${Destinations.MINE_LAND_ROUTE}/${uid}/${name}/${landPlantedArea}/${landTotalArea}/${profile_photo_url}")
+    }
+
     /**
      * 清理栈中页面，实现后续页面返回直接到桌面
      */
