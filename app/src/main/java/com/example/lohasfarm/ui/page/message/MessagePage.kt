@@ -101,32 +101,34 @@ fun MessagePage(actions: Actions, viewModel: MessagePageViewModel, bottomPadding
             }
         }) { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            LazyColumn(modifier = Modifier
-                .fillMaxWidth()
-                .padding(0.dp, 0.dp, 0.dp, bottomPadding)
-                .background(LOHASFarmTheme.colors.background)){
-                items(items =
-                if (messageBoxState!!) {
-                    sequenceInfoState!!
-                } else {
-                    sequenceInfoState!!
-                }, key = {data -> data.sequence_info_uid}) { data ->
-                    MessageItem(title = data.sequence_info_title,
-                        content = data.sequence_info_content,
-                        time = data.sequence_info_date,
-                        num = data.sequence_info_num,
-                        modifier = Modifier
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) {
-                            actions.toDetailMessagePage(data.sequence_info_uid, data.sequence_info_title)
-                        },
-                        icon = if (data.sequence_info_type > 0) {
-                            R.drawable.ic_propaganda_notice
-                        } else {
-                            R.drawable.ic_harvest_notice
-                        })
+            if (messageBoxState!!) {
+                LazyColumn(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 0.dp, 0.dp, bottomPadding)
+                    .background(LOHASFarmTheme.colors.background)){
+                    items(items =
+                    if (messageBoxState!!) {
+                        sequenceInfoState!!
+                    } else {
+                        sequenceInfoState!!
+                    }, key = {data -> data.sequence_info_uid}) { data ->
+                        MessageItem(title = data.sequence_info_title,
+                            content = data.sequence_info_content,
+                            time = data.sequence_info_date,
+                            num = data.sequence_info_num,
+                            modifier = Modifier
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null
+                                ) {
+                                    actions.toDetailMessagePage(data.sequence_info_uid, data.sequence_info_title)
+                                },
+                            icon = if (data.sequence_info_type > 0) {
+                                R.drawable.ic_propaganda_notice
+                            } else {
+                                R.drawable.ic_harvest_notice
+                            })
+                    }
                 }
             }
         }

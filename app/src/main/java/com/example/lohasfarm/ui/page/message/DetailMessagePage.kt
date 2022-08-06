@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lohasfarm.logic.viewModel.DetailMessagePageViewModel
@@ -50,7 +51,9 @@ fun DetailMessagePage(actions: Actions, sequenceUid: String, title: String) {
                             text = title,
                             color = LOHASFarmTheme.colors.navBar,
                             style = MaterialTheme.typography.h1,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 },
