@@ -1,10 +1,7 @@
 package com.example.lohasfarm.logic.network
 
 import com.example.lohasfarm.IS_TEST_ENV
-import com.example.lohasfarm.logic.network.service.ActivityPageService
-import com.example.lohasfarm.logic.network.service.FarmPageService
-import com.example.lohasfarm.logic.network.service.LoginService
-import com.example.lohasfarm.logic.network.service.MessagePageService
+import com.example.lohasfarm.logic.network.service.*
 
 object LfNetwork {
 
@@ -27,6 +24,11 @@ object LfNetwork {
      * 消息页相关服务
      */
     private val messagePageService = ServiceCreator.create(MessagePageService::class.java, IS_TEST_ENV)
+
+    /**
+     * 个人页相关服务
+     */
+    private val minePageService = ServiceCreator.create(MinePageService::class.java, IS_TEST_ENV)
 
     /**
      * 登陆
@@ -63,5 +65,10 @@ object LfNetwork {
      */
     suspend fun getDetailMessageInfo(userUuid: String, sequenceUid: String) =
         messagePageService.getDetailMessageInfo(userUuid, sequenceUid)
+
+    /**
+     * 获取个人信息
+     */
+    suspend fun getUserInfo(userUuid: String) = minePageService.getUserInfo(userUuid)
 
 }

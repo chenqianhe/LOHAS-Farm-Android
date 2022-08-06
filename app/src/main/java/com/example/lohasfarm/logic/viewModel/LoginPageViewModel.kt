@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.lohasfarm.TOAST_TEST
 import com.example.lohasfarm.logic.network.model.BaseModel
 import com.example.lohasfarm.logic.network.model.LoginModel
 import com.example.lohasfarm.logic.network.repository.AccountRepository
@@ -61,9 +62,11 @@ class LoginPageViewModel (application: Application) : AndroidViewModel(applicati
     private val accountRepository = AccountRepository()
 
     fun login() = viewModelScope.async(Dispatchers.IO) {
-        withContext(Dispatchers.Main) {
-            Log.i(TAG, _account.value!!)
-            Log.i(TAG, _password.value!!)
+        if (TOAST_TEST) {
+            withContext(Dispatchers.Main) {
+                Log.i(TAG, _account.value!!)
+                Log.i(TAG, _password.value!!)
+            }
         }
         if (_account.value!!.isNotEmpty()
             && _password.value!!.isNotEmpty()

@@ -3,6 +3,8 @@ package com.example.lohasfarm.logic.utils
 enum class StateCode(val code: Int) {
     LoginSuccess(100),
     LoginInfoError(101),
+    GetUserInfoSuccess(200),
+    GetUserInfoError(201),
     GetLandInfoSuccess(300),
     GetLandInfoError(301),
     GetPlantIntroSuccess(400),
