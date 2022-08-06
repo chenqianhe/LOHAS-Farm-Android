@@ -1,4 +1,4 @@
-package com.example.lohasfarm.ui.page
+package com.example.lohasfarm.ui.page.activity
 
 import android.annotation.SuppressLint
 import android.webkit.WebView

@@ -1,4 +1,4 @@
-package com.example.lohasfarm.ui.page
+package com.example.lohasfarm.ui.page.message
 
 
 import androidx.compose.foundation.background
