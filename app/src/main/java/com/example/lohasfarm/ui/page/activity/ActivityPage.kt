@@ -1,7 +1,6 @@
 package com.example.lohasfarm.ui.page.activity
 
-import android.content.Intent
-import android.net.Uri
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

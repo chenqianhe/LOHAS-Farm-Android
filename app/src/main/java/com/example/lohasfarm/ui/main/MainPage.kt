@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lohasfarm.logic.viewModel.ActivityPageViewModel
 import com.example.lohasfarm.logic.viewModel.FarmPageViewModel
 import com.example.lohasfarm.logic.viewModel.HomeViewModel
+import com.example.lohasfarm.logic.viewModel.MessagePageViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Tabs
 import com.example.lohasfarm.ui.page.activity.ActivityPage
@@ -32,6 +33,7 @@ private const val TAG = "MainPage"
 fun MainPage(actions: Actions) {
     val viewModel: HomeViewModel = hiltViewModel()
     val activityModel: ActivityPageViewModel = hiltViewModel()
+    val messageModel: MessagePageViewModel = hiltViewModel()
     val position by viewModel.position.observeAsState()
     val tabs = Tabs.values()
 
@@ -85,7 +87,10 @@ fun MainPage(actions: Actions) {
                         activityModel.getFarmActivityInfo()
                         ActivityPage(actions, activityModel, innerPadding.calculateBottomPadding())
                     }
-                    Tabs.MESSAGE_PAGE -> MessagePage()
+                    Tabs.MESSAGE_PAGE -> {
+                        messageModel.getSequenceInfoData()
+                        MessagePage(actions, messageModel, innerPadding.calculateBottomPadding())
+                    }
                     Tabs.MINE_PAGE -> MinePage()
                     else -> {
                         Log.e(TAG, "页面显示错误")

@@ -4,6 +4,7 @@ import com.example.lohasfarm.IS_TEST_ENV
 import com.example.lohasfarm.logic.network.service.ActivityPageService
 import com.example.lohasfarm.logic.network.service.FarmPageService
 import com.example.lohasfarm.logic.network.service.LoginService
+import com.example.lohasfarm.logic.network.service.MessagePageService
 
 object LfNetwork {
 
@@ -21,6 +22,11 @@ object LfNetwork {
      * 活动页相关服务
      */
     private val activityPageService = ServiceCreator.create(ActivityPageService::class.java, IS_TEST_ENV)
+
+    /**
+     * 消息页相关服务
+     */
+    private val messagePageService = ServiceCreator.create(MessagePageService::class.java, IS_TEST_ENV)
 
     /**
      * 登陆
@@ -46,5 +52,10 @@ object LfNetwork {
      * 获取农场活动信息
      */
     suspend fun getFarmActivityInfo(userUuid: String) = activityPageService.getFarmActivityInfo(userUuid)
+
+    /**
+     * 获取农场通知概览
+     */
+    suspend fun getSequenceInfo(userUuid: String) = messagePageService.getSequenceInfo(userUuid)
 
 }

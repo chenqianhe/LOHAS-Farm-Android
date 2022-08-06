@@ -11,5 +11,7 @@ enum class StateCode(val code: Int) {
     GetFoodActivityInfoError(501),
     GetFarmActivityInfoSuccess(600),
     GetFarmActivityInfoError(601),
+    GetSequenceInfoSuccess(700),
+    GetSequenceInfoError(701),
 
 }
