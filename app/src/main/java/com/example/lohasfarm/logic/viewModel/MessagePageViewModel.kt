@@ -57,4 +57,8 @@ class MessagePageViewModel(application: Application): AndroidViewModel(applicati
         }
     }
 
+    fun getDetailMessageData() {
+
+    }
+
 }

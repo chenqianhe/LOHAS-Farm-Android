@@ -13,5 +13,7 @@ enum class StateCode(val code: Int) {
     GetFarmActivityInfoError(601),
     GetSequenceInfoSuccess(700),
     GetSequenceInfoError(701),
+    GetDetailMessageInfoSuccess(800),
+    GetDetailMessageInfoError(801),
 
 }

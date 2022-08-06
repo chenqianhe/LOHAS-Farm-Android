@@ -10,6 +10,7 @@ import androidx.navigation.*
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.main.nav.Destinations
+import com.example.lohasfarm.ui.page.DetailMessagePage
 import com.example.lohasfarm.ui.page.LoginPage
 import com.example.lohasfarm.ui.page.WebPage
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -39,6 +40,15 @@ fun NavGraph(
 
         composableHorizontal(Destinations.LOGIN_ROUTE) {
             LoginPage(actions = actions)
+        }
+
+        composableHorizontal("${Destinations.DETAIL_MESSAGE_ROUTE}/{id}/{title}",
+            arguments = listOf(navArgument("id") {type = NavType.StringType})
+            ) {
+                val argument = requireNotNull(it.arguments)
+                val id = argument.getString("id")
+                val title = argument.getString("title")
+                DetailMessagePage(actions = actions, sequenceUid = id!!, title = title!!)
         }
 
         composableHorizontal("${Destinations.WEB_PAGE_ROUTE}/{url}/{title}",

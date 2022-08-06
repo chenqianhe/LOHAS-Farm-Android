@@ -58,4 +58,10 @@ object LfNetwork {
      */
     suspend fun getSequenceInfo(userUuid: String) = messagePageService.getSequenceInfo(userUuid)
 
+    /**
+     * 获取农场通知详情
+     */
+    suspend fun getDetailMessageInfo(userUuid: String, sequenceUid: String) =
+        messagePageService.getDetailMessageInfo(userUuid, sequenceUid)
+
 }

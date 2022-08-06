@@ -8,5 +8,6 @@ object Destinations {
     const val PERSONAL_ROUTE = "personal_route"
     const val LOGIN_ROUTE = "login_route"
     const val WEB_PAGE_ROUTE = "web_page_route"
+    const val DETAIL_MESSAGE_ROUTE = "detail_message_route"
 
 }

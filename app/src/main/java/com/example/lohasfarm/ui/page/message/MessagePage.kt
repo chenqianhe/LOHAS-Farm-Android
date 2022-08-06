@@ -115,6 +115,13 @@ fun MessagePage(actions: Actions, viewModel: MessagePageViewModel, bottomPadding
                         content = data.sequence_info_content,
                         time = data.sequence_info_date,
                         num = data.sequence_info_num,
+                        modifier = Modifier
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            actions.toDetailMessagePage(data.sequence_info_uid, data.sequence_info_title)
+                        },
                         icon = if (data.sequence_info_type > 0) {
                             R.drawable.ic_propaganda_notice
                         } else {
@@ -127,8 +134,8 @@ fun MessagePage(actions: Actions, viewModel: MessagePageViewModel, bottomPadding
 
 
 @Composable
-fun MessageItem(title: String, content: String, time: String, num: Int, icon: Int = R.drawable.ic_harvest_notice) {
-    Row(modifier = Modifier
+fun MessageItem(title: String, content: String, time: String, num: Int, modifier: Modifier, icon: Int = R.drawable.ic_harvest_notice) {
+    Row(modifier = modifier
         .padding(0.dp, 1.04.dp)
         .height(70.72.dp)
         .fillMaxWidth()
