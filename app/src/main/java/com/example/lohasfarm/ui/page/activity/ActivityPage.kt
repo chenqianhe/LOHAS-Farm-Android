@@ -50,7 +50,7 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel,
                     .height(28.08.dp)
                     .fillMaxWidth()
             ) {
-                Text(text = "农副产品", color = if (activityItemState!!) {
+                Text(text = "农副食品", color = if (activityItemState!!) {
                     LOHASFarmTheme.colors.tabSelected
                 } else {
                     LOHASFarmTheme.colors.tabDefault
@@ -110,8 +110,14 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel,
                 ActivityItem(title = data.activity_title,
                     url = data.activity_photo_url,
                     date = data.activity_date,
-                    finalUrl = data.activity_final_url,
-                    actions = actions)
+                    modifier = Modifier.clickable {
+                        actions.toWebPage(data.activity_final_url.replace("https://", ""),
+                            if (activityItemState!!) {
+                                "农副食品"
+                            } else {
+                                "农场活动"
+                            })
+                    })
             }
         }
     }
@@ -119,14 +125,11 @@ fun ActivityPage(actions: Actions, activityPageViewModel: ActivityPageViewModel,
 
 
 @Composable
-fun ActivityItem(title: String, url: String, date: String, finalUrl: String, actions: Actions) {
-    Row(modifier = Modifier
+fun ActivityItem(title: String, url: String, date: String, modifier: Modifier) {
+    Row(modifier = modifier
         .padding(0.dp, 8.32.dp)
         .height(83.2.dp)
-        .width(348.4.dp)
-        .clickable {
-            actions.toWebPage(finalUrl.replace("https://", ""))
-        },
+        .width(348.4.dp),
     horizontalArrangement = Arrangement.SpaceAround) {
         Image(modifier = Modifier
             .padding(0.dp)

@@ -1,5 +1,6 @@
 package com.example.lohasfarm.ui.main.nav
 
+import androidx.annotation.StringRes
 import androidx.navigation.NavHostController
 
 class Actions(navController: NavHostController) {
@@ -12,8 +13,8 @@ class Actions(navController: NavHostController) {
         navController.navigate(Destinations.LOGIN_ROUTE)
     }
 
-    val toWebPage: (url: String) -> Unit = {
-        navController.navigate("${Destinations.WEB_PAGE_ROUTE}/${it}")
+    val toWebPage: (url: String, title: String) -> Unit = { url: String, title: String ->
+        navController.navigate("${Destinations.WEB_PAGE_ROUTE}/${url}/${title}")
     }
 
     val upPress: () -> Unit = {

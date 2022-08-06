@@ -41,11 +41,15 @@ fun NavGraph(
             LoginPage(actions = actions)
         }
 
-        composableHorizontal("${Destinations.WEB_PAGE_ROUTE}/{url}",
-            arguments = listOf(navArgument("url") {type = NavType.StringType})) {
+        composableHorizontal("${Destinations.WEB_PAGE_ROUTE}/{url}/{title}",
+            arguments = listOf(
+                navArgument("url") {type = NavType.StringType},
+                navArgument("title") {type = NavType.StringType}
+            )) {
                 val argument = requireNotNull(it.arguments)
                 val url = argument.getString("url")
-                WebPage(actions = actions, url = url!!)
+                val title = argument.getString("title")
+                WebPage(actions = actions, url = url!!, title = title!!)
         }
     }
 }
