@@ -9,8 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,11 +23,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.lohasfarm.R
-import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.viewModel.MinePageViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
-import com.example.lohasfarm.ui.theme.background
+
 
 @Composable
 fun MinePage(actions: Actions, viewModel: MinePageViewModel, bottomPadding: Dp) {
