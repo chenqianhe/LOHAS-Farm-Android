@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.lohasfarm.R
+import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.viewModel.MinePageViewModel
 import com.example.lohasfarm.ui.main.nav.Actions
 import com.example.lohasfarm.ui.theme.LOHASFarmTheme
@@ -311,7 +312,9 @@ fun MinePage(actions: Actions, viewModel: MinePageViewModel, bottomPadding: Dp) 
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = LOHASFarmTheme.colors.white),
                                 onClick = {
-
+                                    LfState.clearAll()
+                                    actions.clearBackStack()
+                                    actions.toLoginPage()
                                 }) {
                                 Text(text = "退出登录",
                                     color = LOHASFarmTheme.colors.color,
