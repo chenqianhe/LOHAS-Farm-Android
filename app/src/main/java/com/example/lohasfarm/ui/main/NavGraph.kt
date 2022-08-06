@@ -13,6 +13,7 @@ import com.example.lohasfarm.ui.main.nav.Destinations
 import com.example.lohasfarm.ui.page.message.DetailMessagePage
 import com.example.lohasfarm.ui.page.LoginPage
 import com.example.lohasfarm.ui.page.activity.WebPage
+import com.example.lohasfarm.ui.page.mine.PersonalInfoPage
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -60,6 +61,21 @@ fun NavGraph(
                 val url = argument.getString("url")
                 val title = argument.getString("title")
                 WebPage(actions = actions, url = url!!, title = title!!)
+        }
+
+        composableHorizontal("${Destinations.PERSONAL_INFO_ROUTE}/{uid}/{ugid}/{name}/{profile_photo_url}",
+            arguments = listOf(
+                navArgument("uid") {type = NavType.StringType},
+                navArgument("ugid") {type = NavType.StringType},
+                navArgument("name") {type = NavType.StringType},
+                navArgument("profile_photo_url") {type = NavType.StringType},
+            )) {
+            val argument = requireNotNull(it.arguments)
+            val uid = argument.getString("uid")
+            val ugid = argument.getString("ugid")
+            val name = argument.getString("name")
+            val profilePhotoUrl = argument.getString("profile_photo_url")
+            PersonalInfoPage(actions = actions, uid = uid!!, ugid = ugid!!, name = name!!, profile_photo_url = profilePhotoUrl!!)
         }
     }
 }

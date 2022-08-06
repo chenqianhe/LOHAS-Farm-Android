@@ -1,17 +1,18 @@
 package com.example.lohasfarm.ui.page.mine
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -110,7 +111,16 @@ fun MinePage(actions: Actions, viewModel: MinePageViewModel, bottomPadding: Dp) 
                             .fillMaxWidth()
                             .height(45.76.dp)
                             .background(LOHASFarmTheme.colors.white)
-                            .padding(20.8.dp, 12.48.dp),
+                            .padding(20.8.dp, 12.48.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                actions.toPersonalInfo(userInfoState!!.uid,
+                                    userInfoState!!.ugid,
+                                    userInfoState!!.name,
+                                    userInfoState!!.profile_photo.replace("/", "斜杠"))
+                            },
                             horizontalArrangement = Arrangement.Start,
                             verticalAlignment = Alignment.Bottom) {
                             Image(painter = painterResource(id = R.drawable.ic_personal_information),

@@ -25,6 +25,13 @@ class Actions(navController: NavHostController) {
         navController.navigate("${Destinations.DETAIL_MESSAGE_ROUTE}/${id}/${title}")
     }
 
+    val toPersonalInfo: (uid: String, ugid: String, name: String, profile_photo_url: String) -> Unit
+            = { uid: String, ugid: String, name: String, profile_photo_url: String ->
+        navController
+            .navigate("${Destinations.PERSONAL_INFO_ROUTE}/${uid}/${ugid}/${name}/${profile_photo_url}")
+
+    }
+
     /**
      * 清理栈中页面，实现后续页面返回直接到桌面
      */
