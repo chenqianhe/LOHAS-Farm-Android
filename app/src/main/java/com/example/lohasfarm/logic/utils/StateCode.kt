@@ -21,4 +21,6 @@ enum class StateCode(val code: Int) {
     GetPlantAddableError(901),
     GetTutorSuccess(1000),
     GetTutorError(1001),
+    GetOpInfoSuccess(2000),
+    GetOpInfoError(2001),
 }

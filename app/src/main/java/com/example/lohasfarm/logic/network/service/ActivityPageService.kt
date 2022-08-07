@@ -8,12 +8,12 @@ import retrofit2.http.Header
 interface ActivityPageService {
     @GET("activity/food")
     suspend fun getFoodActivityInfo(
-        @Header("X-WX-OPENID") uuid: String,
+        @Header("X-WX-OPENID") uuid: String
     ): BaseModel<List<ActivityModel>>
 
     @GET("activity/farm")
     suspend fun getFarmActivityInfo(
-        @Header("X-WX-OPENID") uuid: String,
+        @Header("X-WX-OPENID") uuid: String
     ): BaseModel<List<ActivityModel>>
 
 }

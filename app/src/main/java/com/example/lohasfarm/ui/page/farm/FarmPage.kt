@@ -253,7 +253,7 @@ fun PlantCard(name: String, url: String, state: String, day: Int, totalDay: Int)
             .size(104.dp),
             painter = rememberAsyncImagePainter(model = url),
             contentDescription = null,
-            contentScale = ContentScale.Fit)
+            contentScale = ContentScale.FillWidth)
         Row(modifier = Modifier
             .padding(0.dp)
             .width(104.dp)

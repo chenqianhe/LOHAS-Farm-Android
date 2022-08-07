@@ -21,6 +21,10 @@ class Actions(navController: NavHostController) {
         navController.navigate(Destinations.TUTOR_ROUTE)
     }
 
+    val toCropManagementPage: () -> Unit = {
+        navController.navigate(Destinations.CROP_MANGE_ROUTE)
+    }
+
     val upPress: () -> Unit = {
         navController.navigateUp()
     }

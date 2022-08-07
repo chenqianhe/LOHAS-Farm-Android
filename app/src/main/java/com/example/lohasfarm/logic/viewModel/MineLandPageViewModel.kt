@@ -23,7 +23,6 @@ class MineLandPageViewModel(application: Application): AndroidViewModel(applicat
     companion object {
         private const val TAG = "MineLandPageViewModel"
     }
-    private val farmPageRepository = FarmPageRepository()
     private val mineFarmPageRepository = MineFarmPageRepository()
 
     private val _plantInfoState = MutableLiveData<List<PlantIntroModel>>()
@@ -48,7 +47,7 @@ class MineLandPageViewModel(application: Application): AndroidViewModel(applicat
 
     fun getPlantData() {
         viewModelScope.launch {
-            val plantInfoModel = farmPageRepository.getPlantIntroData(LfState.uuid,)
+            val plantInfoModel = mineFarmPageRepository.getPlantIntroData(LfState.uuid)
             Log.i(TAG, plantInfoModel.code.toString())
             Log.i(TAG, plantInfoModel.msg)
             Log.i(TAG, plantInfoModel.content.size.toString())

@@ -41,6 +41,11 @@ object LfNetwork {
     private val plantingTutorialService = ServiceCreator.create(PlantingTutorialService::class.java, IS_TEST_ENV)
 
     /**
+     * 作物管理相关服务
+     */
+    private val cropManagementService = ServiceCreator.create(CropManagementService::class.java, IS_TEST_ENV)
+
+    /**
      * 登陆
      */
     suspend fun login(account: String, password: String) = loginService.login(account, password)
@@ -102,4 +107,9 @@ object LfNetwork {
      * 获取教程信息
      */
     suspend fun getTutorInfo(userUuid: String) = plantingTutorialService.getTutorInfo(userUuid)
+
+    /**
+     * 获取操作记录
+     */
+    suspend fun getOperationInfo(userUuid: String) = cropManagementService.getOperationInfo(userUuid)
 }

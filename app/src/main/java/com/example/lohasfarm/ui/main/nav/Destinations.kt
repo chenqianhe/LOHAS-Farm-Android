@@ -14,5 +14,6 @@ object Destinations {
     const val MINE_LAND_ROUTE = "mine_land_route"
     const val MINE_LAND_INFO_ROUTE = "mine_land_info_route"
     const val TUTOR_ROUTE = "tutor_route"
+    const val CROP_MANGE_ROUTE = "crop_mange_route"
 
 }

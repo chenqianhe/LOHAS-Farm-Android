@@ -166,7 +166,13 @@ fun MineLandPage(actions: Actions,
                             .width(49.92.dp)) {
                             Image(modifier = Modifier
                                 .padding(0.dp)
-                                .size(49.92.dp),
+                                .size(49.92.dp)
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null
+                                ) {
+                                    actions.toCropManagementPage()
+                                },
                                 painter = painterResource(id = R.drawable.ic_managing_crops),
                                 contentDescription = null,
                                 contentScale = ContentScale.Fit)
