@@ -1,6 +1,6 @@
 package com.example.lohasfarm.ui.page.farm
 
-import android.view.RoundedCorner
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

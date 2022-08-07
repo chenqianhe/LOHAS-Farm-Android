@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.lohasfarm.TOAST_TEST
 import com.example.lohasfarm.logic.network.model.FullPlantInfoModel
 import com.example.lohasfarm.logic.network.model.PlantIntroModel
-import com.example.lohasfarm.logic.network.repository.FarmPageRepository
 import com.example.lohasfarm.logic.network.repository.MineFarmPageRepository
 import com.example.lohasfarm.logic.utils.LfState
 import com.example.lohasfarm.logic.utils.StateCode
