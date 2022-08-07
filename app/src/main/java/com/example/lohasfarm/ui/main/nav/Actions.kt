@@ -17,6 +17,10 @@ class Actions(navController: NavHostController) {
         navController.navigate("${Destinations.WEB_PAGE_ROUTE}/${url}/${title}")
     }
 
+    val toTutorPage: () -> Unit = {
+        navController.navigate(Destinations.TUTOR_ROUTE)
+    }
+
     val upPress: () -> Unit = {
         navController.navigateUp()
     }

@@ -16,6 +16,7 @@ import com.example.lohasfarm.ui.page.WebPage
 import com.example.lohasfarm.ui.page.farm.LandInfoPage
 import com.example.lohasfarm.ui.page.farm.MineLandPage
 import com.example.lohasfarm.ui.page.farm.OthersLandDetail
+import com.example.lohasfarm.ui.page.farm.PlantingTutorialPage
 import com.example.lohasfarm.ui.page.mine.PersonalInfoPage
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -44,6 +45,10 @@ fun NavGraph(
 
         composableHorizontal(Destinations.LOGIN_ROUTE) {
             LoginPage(actions = actions)
+        }
+
+        composableHorizontal(Destinations.TUTOR_ROUTE) {
+            PlantingTutorialPage(actions = actions)
         }
 
         composableHorizontal("${Destinations.DETAIL_MESSAGE_ROUTE}/{id}/{title}",
