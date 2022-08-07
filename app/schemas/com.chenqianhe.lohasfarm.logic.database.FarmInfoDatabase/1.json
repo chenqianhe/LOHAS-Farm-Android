@@ -1,0 +1,76 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "781b68a569ebdb60c1afda30e224730e",
+    "entities": [
+      {
+        "tableName": "FarmInfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`land_uid` TEXT NOT NULL, `land_name` TEXT NOT NULL, `land_profile_photo` TEXT NOT NULL, `is_mine` INTEGER NOT NULL, `land_planted_area` INTEGER NOT NULL, `land_total_area` INTEGER NOT NULL, `land_soil_type` TEXT NOT NULL, `land_lease_term` TEXT NOT NULL, PRIMARY KEY(`land_uid`))",
+        "fields": [
+          {
+            "fieldPath": "landUid",
+            "columnName": "land_uid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landName",
+            "columnName": "land_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landProfilePhoto",
+            "columnName": "land_profile_photo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isMine",
+            "columnName": "is_mine",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landPlantedArea",
+            "columnName": "land_planted_area",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landTotalArea",
+            "columnName": "land_total_area",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landSoilType",
+            "columnName": "land_soil_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "landLeaseTerm",
+            "columnName": "land_lease_term",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "land_uid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '781b68a569ebdb60c1afda30e224730e')"
+    ]
+  }
+}
